@@ -20,7 +20,7 @@
             @click="handleClickForItem1(task, i);"
           >
           <!-- TASK INFO -->
-            {{  `${task.name} - ${task.difficulty} - ${task.created}`}}
+            {{  `${task.name} - ${task.difficulty} - ${task.created} - ${task.finishedTimes}`}}
 
           <!-- SET DIFFICULTY -->
             <div class="buttons-container" v-if="!task.difficulty">
@@ -28,12 +28,18 @@
               <button type="medium" @click.stop="setDifficulty1(i, 2);">Medium</button>
               <button type="hard" @click.stop="setDifficulty1(i, 3);">Hard</button>
             </div>
+
+            <div class="delete-container" v-if="task.difficulty">
+                <button type="delete" @click.stop="deleteTask(i);">X</button>
+            </div>
+
           </li>
         </ul>
       </div>
 </section>
 
 <button type="sortDate" @click="sortDate();">Date</button>
+<button type="reorder" @click="reorderTask();">^</button>
 
 </div>
 </template>
@@ -83,6 +89,15 @@ export default {
       localStorage.setItem('repeatTasks', JSON.stringify(this.repeatTasks));
       localStorage.setItem('completedTasks', JSON.stringify(this.completedTasks));
     },
+    deleteTask(i){
+        this.repeatTasks.splice(i, 1);
+        console.log(this.repeatTasks);//Removes at element i, 1 index is removed
+    },
+    reorderTask(){
+        var x = this.repeatTasks.shift();
+        this.repeatTasks.push(x);
+        this.saveRepeatTasks();
+},
     //Needs optimized
     //On submit button click
     submitForm1(evt, val) {
@@ -111,16 +126,12 @@ export default {
     //Needs optimized
     handleClickForItem1(task, i) {
       console.log(this.repeatTasks);
-      var clickedItem = task;
-      if (clickedItem.difficulty > 0 && clickedItem.finished === false) {
-        clickedItem.finished = true;
-        this.completedTasks.push(clickedItem);
+      if (task.difficulty > 0) {
+        task.finishedTimes++;
+        this.completedTasks.push(task);
         this.saveRepeatTasks(task, i);
-        //clickedItem.finishedTimes++;
-      } else if (clickedItem.difficulty < 1) {
+      } else if (task.difficulty < 1) {
         alert("Please select a difficulty before finishing!");
-      } else if(clickedItem.finished === true) {
-        alert("You've already finished this task");
       }
     }
   }
@@ -132,7 +143,7 @@ function createTaskFromValues(name) {
   return {
     name,
     created: `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()}`,
-    finished: false,
+    finishedTimes: 0,
     difficulty: 0
   };
 }
@@ -148,10 +159,12 @@ function createTaskFromValues(name) {
 }
 .task-list-container{
   display: flex;
+  justify-content: center;
 }
 .task-list {
-  flex-grow: 1;
+  width: 50%;
   border: solid black 1px;
+  border-radius: 15px;
 }
 
 .task-list ul {
@@ -159,12 +172,13 @@ function createTaskFromValues(name) {
   padding-left: 0;
 }
 
-
-ul li {
-  padding-top: 10px;
-  padding-bottom: 10px;
-  padding-left: 7px;
-  border: solid blue 0.1px;
+.task-list li {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 7px;
+    border-top: solid black 1px;
+    border-bottom: solid black 1px;
+    
 }
 #page {
   border: solid black 1px;

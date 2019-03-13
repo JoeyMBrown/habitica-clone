@@ -5,13 +5,15 @@ import HelloWorld from "./components/HelloWorld";
 import Dailies from "./components/Dailies";
 import Habits from "./components/Habits";
 import TodoList from "./components/TodoList";
+import CompletedTasks from "./components/CompletedTasks";
 
 
 const routes = [
   { path: '/foo', component: HelloWorld },
   { path: '/Dailies', component: Dailies},
   { path: '/Habits', component: Habits},
-  { path: '/TodoList', component: TodoList}
+  { path: '/TodoList', component: TodoList},
+  { path: '/CompletedTasks', component: CompletedTasks}
 ]
 
 Vue.config.productionTip = false;

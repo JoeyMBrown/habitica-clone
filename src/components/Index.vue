@@ -4,6 +4,7 @@
     <router-link to="/TodoList">Todo-List</router-link>
     <router-link to="/Dailies">Dailies</router-link>
     <router-link to="/Habits">Habits</router-link>
+    <router-link to="/CompletedTasks">Completed Tasks</router-link>
     <p><router-view></router-view></p>
   </div>
 </template>

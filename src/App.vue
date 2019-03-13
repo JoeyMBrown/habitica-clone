@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import CompletedTasks from './components/CompletedTasks';
 import HelloWorld from "./components/HelloWorld";
 import Dailies from "./components/Dailies";
 import TodoList from "./components/TodoList";
