@@ -1,10 +1,9 @@
 <template>
   <div id="app">
+    <div id="header">
+      <Header />
+    </div>
     <Index />
-  <!--<HelloWorld />-->
-    <!-- route outlet -->
-  <!-- component matched by the route will render here 
-  <router-view></router-view>-->
   </div>
 </template>
 
@@ -15,12 +14,14 @@ import Dailies from "./components/Dailies";
 import TodoList from "./components/TodoList";
 import Habits from "./components/Habits";
 import Index from "./components/Index";
+import Header from "./components/Header";
 import VueRouter from 'vue-router';
 
 export default {
   name: "App",
   components: {
-    Index
+    Index,
+    Header
   }
 };
 </script>
@@ -35,10 +36,18 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+#header {
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
 }
 
 html, body {
   overflow-x: hidden;
+  background-color: #f5f5f5;
+  margin: 0;
 }
 </style>

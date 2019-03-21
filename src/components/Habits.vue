@@ -17,19 +17,19 @@
           <li
             :key="i"
             v-for="(task, i) in repeatTasks1"
-            @click="handleClickForItem2(task, i);"
+            @click="handleClickForItem2(task, i);" v-bind:id="i" :class="`${task.difficulty}`"
           >
             <!-- TASK INFO -->
             {{  `${task.name} - ${task.difficulty} - ${task.created} - ${task.finishedTimes}`}}
 
           <!-- SET DIFFICULTY -->
-            <div class="buttons-container" v-if="!task.difficulty">
-              <button type="easy" @click.stop="setDifficulty2(i, 1);">Easy</button>
-              <button type="medium" @click.stop="setDifficulty2(i, 2);">Medium</button>
-              <button type="hard" @click.stop="setDifficulty2(i, 3);">Hard</button>
+            <div class="buttons-container" v-if="task.difficulty === 'notSet'">
+              <button type="easy" @click.stop="setDifficulty2(i, 'easy');">Easy</button>
+              <button type="medium" @click.stop="setDifficulty2(i, 'medium');">Medium</button>
+              <button type="hard" @click.stop="setDifficulty2(i, 'hard');">Hard</button>
             </div>
 
-            <div class="delete-container" v-if="task.difficulty">
+            <div class="delete-container" v-if="task.difficulty !== 'notSet'">
                 <button type="delete" @click.stop="deleteTask(i);">X</button>
             </div>
 
@@ -68,8 +68,8 @@ export default {
       let parsedRepeatTasks1 = JSON.parse(repeatTasks1);
       //console.log('RepeatTasks1 var in created function: ' + repeatTasks1);
       this.repeatTasks1 = parsedRepeatTasks1;
-      //console.log('RepeatTasks1 Lists, post Parsed: ' + this.repeatTasks1);
     }
+      //console.log('RepeatTasks1 Lists, post Parsed: ' + this.repeatTasks1);
     if(completedTasks) {
       let parsedCompletedTasks = JSON.parse(completedTasks);
       this.completedTasks = parsedCompletedTasks;
@@ -111,22 +111,29 @@ export default {
     sortDate() {
         this.repeatTasks1.reverse();
     },
-    //Allows user to choose difficulty.  This will need optimized..
+      // 1 - easy
+      // 2 - medium
+      // 3 - hard
     setDifficulty2(index, difficulty) {
-      // 0 - easy
-      // 1 - medium
-      // 2 - hard
       this.repeatTasks1[index].difficulty = difficulty;
+      var list = document.getElementById(index);
+      if (difficulty === 'easy'){
+          list.className = "easy";
+      } else if (difficulty === 'medium') {
+          list.className = "medium";
+      } else if (difficulty === 'hard') {
+          list.className = "hard";
+      }
       this.saveRepeatTasks1();
     },
     //Needs optimized
     handleClickForItem2(task, i) {
-      if (task.difficulty > 0) {
+      if (task.difficulty !== 'notSet') {
         task.finishedTimes++;
         this.completedTasks.push(task);
         this.saveRepeatTasks1(task, i);
         console.log('Here is all the finished tasks: ', this.completedTasks);
-      } else if (task.difficulty < 1) {
+      } else if (task.difficulty === 'notSet') {
         alert("Please select a difficulty before finishing!");
       } else if(task.finished === true) {
         alert("You've already finished this task");
@@ -142,7 +149,7 @@ function createTaskFromValues(name) {
     name,
     created: `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()}`,
     finishedTimes: 0,
-    difficulty: 0
+    difficulty: 'notSet'
   };
 }
 </script>
@@ -176,6 +183,18 @@ function createTaskFromValues(name) {
     padding-left: 7px;
     border-top: solid black 1px;
     border-bottom: solid black 1px;
+}
+.notSet {
+  background-color: yellow;
+}
+.easy  {
+    background-color: green;
+}
+.medium  {
+    background-color: blue;
+}
+.hard {
+    background-color: purple;
 }
 #page {
   border: solid black 1px;

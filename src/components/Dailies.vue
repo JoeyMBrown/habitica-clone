@@ -17,19 +17,19 @@
           <li
             :key="i"
             v-for="(task, i) in repeatTasks"
-            @click="handleClickForItem1(task, i);"
+            @click="handleClickForItem1(task, i);" v-bind:id="i" :class="`${task.difficulty}`"
           >
           <!-- TASK INFO -->
             {{  `${task.name} - ${task.difficulty} - ${task.created} - ${task.finishedTimes}`}}
 
           <!-- SET DIFFICULTY -->
-            <div class="buttons-container" v-if="!task.difficulty">
-              <button type="easy" @click.stop="setDifficulty1(i, 1);">Easy</button>
-              <button type="medium" @click.stop="setDifficulty1(i, 2);">Medium</button>
-              <button type="hard" @click.stop="setDifficulty1(i, 3);">Hard</button>
+            <div class="buttons-container" v-if="task.difficulty === 'notSet'">
+              <button type="easy" @click.stop="setDifficulty1(i, 'easy');">Easy</button>
+              <button type="medium" @click.stop="setDifficulty1(i, 'medium');">Medium</button>
+              <button type="hard" @click.stop="setDifficulty1(i, 'hard');">Hard</button>
             </div>
 
-            <div class="delete-container" v-if="task.difficulty">
+            <div class="delete-container" v-if="task.difficulty !== 'notSet'">
                 <button type="delete" @click.stop="deleteTask(i);">X</button>
             </div>
 
@@ -115,22 +115,29 @@ export default {
     sortDate() {
       this.repeatTasks.reverse();
     },
-    //Allows user to choose difficulty.  This will need optimized..
+      // 1 - easy
+      // 2 - medium
+      // 3 - hard
     setDifficulty1(index, difficulty) {
-      // 0 - easy
-      // 1 - medium
-      // 2 - hard
       this.repeatTasks[index].difficulty = difficulty;
       this.saveRepeatTasks();
+      var list = document.getElementById(index);
+      if (difficulty === 'easy') {
+        list.className ="easy";
+      } else if (difficulty === 'medium') {
+          list.className = "medium";
+      } else if (difficulty === 'hard') {
+          list.className = "hard";
+      }
     },
     //Needs optimized
     handleClickForItem1(task, i) {
       console.log(this.repeatTasks);
-      if (task.difficulty > 0) {
+      if (task.difficulty !== 'notSet') {
         task.finishedTimes++;
         this.completedTasks.push(task);
         this.saveRepeatTasks(task, i);
-      } else if (task.difficulty < 1) {
+      } else if (task.difficulty === 'notSet') {
         alert("Please select a difficulty before finishing!");
       }
     }
@@ -144,7 +151,7 @@ function createTaskFromValues(name) {
     name,
     created: `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()}`,
     finishedTimes: 0,
-    difficulty: 0
+    difficulty: "notSet"
   };
 }
 </script>
@@ -160,6 +167,7 @@ function createTaskFromValues(name) {
 .task-list-container{
   display: flex;
   justify-content: center;
+  padding: 10px;
 }
 .task-list {
   width: 50%;
@@ -173,24 +181,30 @@ function createTaskFromValues(name) {
 }
 
 .task-list li {
-    padding-top: 20px;
-    padding-bottom: 20px;
+    padding: 20px;
     padding-left: 7px;
     border-top: solid black 1px;
     border-bottom: solid black 1px;
-    
+}
+.notSet {
+  background-color: yellow;
+}
+.easy {
+  padding: 20px;
+  font-size: 20px;
+  border: 20px solid rgba(0,0,0,0.5);
+  background-color: rgb(57, 255, 57);
+}
+.medium {
+    background-color: blue;
+}
+.hard {
+    background-color: purple;
 }
 #page {
   border: solid black 1px;
+  max-width: 1200px;
+  width: 100%;
   margin: auto;
-}
-
-#todoList {
-  border: solid black 1px;
-  display: inline-block;
-  position: relative;
-  text-align: left;
-  width: 297px;
-  padding: 0px;
 }
 </style>

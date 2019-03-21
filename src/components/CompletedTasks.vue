@@ -6,6 +6,8 @@
       </div>
 </section>
 
+<button type="sortDate" @click="sortDate();">Date</button>
+
 <section class="task-list-container">
 <div class="task-list">
         <ul>
@@ -48,6 +50,11 @@ export default {
         console.log('SAVING COMPLETED TASKS: ', JSON.stringify(val));
         localStorage.setItem('completedTasks', JSON.stringify(val));
             }
+        }
+    },
+    methods: {
+        sortDate() {
+        this.completedTasks.reverse();
         }
     }
 };
