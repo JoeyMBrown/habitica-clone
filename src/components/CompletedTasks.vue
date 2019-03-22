@@ -6,20 +6,20 @@
       </div>
 </section>
 
-<button type="sortDate" @click="sortDate();">Date</button>
-
 <section class="task-list-container">
-<div class="task-list">
+<div class="task-list z-depth-2">
         <ul>
           <li
             :key="i"
-            v-for="(task, i) in completedTasks">
+            v-for="(task, i) in completedTasks" class="z-depth-2">
           <!-- TASK INFO -->
             {{  `${task.name} - ${task.difficulty} - ${task.created}`}}
           </li>
         </ul>
       </div>
 </section>
+
+<button class="waves-effect waves-light btn-small" id="sort" type="sortDate" @click="sortDate();"><i class="tiny material-icons">list</i></button>
 
 </div>
 </template>
@@ -74,27 +74,22 @@ export default {
 }
 .task-list {
   width: 50%;
-  border: solid black 1px;
+  background-color: #cfd8dc;
   border-radius: 15px;
+  overflow-y: auto;
+  height: 464px;
 }
-
 .task-list ul {
   list-style: none;
   padding-left: 0;
 }
-
 .task-list li {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-left: 7px;
-    border-top: solid black 1px;
-    border-bottom: solid black 1px;
-    background-color: #15ff00;
-    
+  padding: 20px;
+  padding-left: 7px;
+  margin: 10px;
+  background-color: #1de9b6;
 }
-
-#page {
-  border: solid black 1px;
-  margin: auto;
+#sort {
+margin-top: 10px;
 }
 </style>

@@ -1,0 +1,30 @@
+<nav>
+  <div class="nav-wrapper">
+    <div class="left">
+    <a href="" class="brand-logo">Logo</a>
+    </div>
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <li><a href="">Inventory</a></li>
+      <li><a href="">Shop <span class="new badge">4</span></a></li>
+      <li><a href="">Battle</a></li>
+    </ul>
+  </div>
+</nav>
+
+Just in case, old nav bar.
+
+  <div id="taskList">
+    <router-link to="/TodoList" class="waves-effect waves-light btn">Todo-List</router-link>
+    <router-link to="/Dailies" class="waves-effect waves-light btn">Dailies</router-link>
+    <router-link to="/Habits" class="waves-effect waves-light btn">Habits</router-link>
+    <router-link to="/CompletedTasks" class="waves-effect waves-light btn">Completed</router-link>
+  </div>
+
+  Old router-links.
+
+    <div class="title"><h4>RPG List</h4></div>
+  <div class="playerData">
+    <p id="data">Character Data PlaceHolder</p>
+  </div>
+
+  From index.vue Old title and placeholder.

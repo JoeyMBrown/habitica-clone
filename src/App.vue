@@ -1,9 +1,8 @@
 <template>
   <div id="app">
-    <div id="header">
-      <Header />
-    </div>
+    <Header />
     <Index />
+    <Footer />
   </div>
 </template>
 
@@ -15,13 +14,15 @@ import TodoList from "./components/TodoList";
 import Habits from "./components/Habits";
 import Index from "./components/Index";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 import VueRouter from 'vue-router';
 
 export default {
   name: "App",
   components: {
     Index,
-    Header
+    Header,
+    Footer
   }
 };
 </script>
@@ -37,14 +38,6 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
-#header {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
 html, body {
   overflow-x: hidden;
   background-color: #f5f5f5;

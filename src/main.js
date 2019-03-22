@@ -6,6 +6,7 @@ import Dailies from "./components/Dailies";
 import Habits from "./components/Habits";
 import TodoList from "./components/TodoList";
 import CompletedTasks from "./components/CompletedTasks";
+import 'materialize-css';
 
 
 const routes = [

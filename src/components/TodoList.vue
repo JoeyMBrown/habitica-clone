@@ -4,41 +4,48 @@
     <div class="task-form">
         <h2>To-Do</h2>
 
-        <form @submit.prevent="submitForm">
-          <input v-model="fields.textBoxValue" placeholder="e.g. Water the gnomes" type="text" />
-          <button type="submit">Submit</button>
-        </form>
+   <form @submit.prevent="submitForm">
+    <div class="row">
+        <div class="col s12">
+          Create a Task:
+          <div class="input-field inline">
+            <input v-model="fields.textBoxValue" id="email_inline" type="text" placeholder="e.g. Water the gnomes">
+          </div>
+          <button type="submit" class="waves-effect waves-light btn-small difficultyButtons">submit</button>
+        </div>
+      </div>
+    </form>
     </div>
-</section>
+    </section>
 
 <section class="task-list-container">
-      <div class="task-list">
+      <div class="task-list z-depth-2">
         <ul>
           <li
             :key="i"
             v-for="(task, i) in tasks"
-            @click="handleClickForItem(task, i);" v-bind:id="i" :class="`${task.difficulty}`"
+            @click="handleClickForItem(task, i);" v-bind:id="i" :class="`${task.difficulty} z-depth-2`"
           >
             <!-- TASK INFO -->
             {{ `${task.name} - ${task.difficulty} - ${task.created}` }}
             
             <!-- SET DIFFICULTY -->
             <div class="buttons-container" v-if="task.difficulty === 'notSet'">
-              <button type="easy" @click.stop="setDifficulty(i, 'easy');">Easy</button>
-              <button type="medium" @click.stop="setDifficulty(i, 'medium');">Medium</button>
-              <button type="hard" @click.stop="setDifficulty(i, 'hard');">Hard</button>
+              <button type="easy" class="waves-effect waves-light btn-small difficultyButtons" @click.stop="setDifficulty(i, 'easy');">Easy</button>
+              <button type="medium" class="waves-effect waves-light btn-small difficultyButtons" @click.stop="setDifficulty(i, 'medium');">Medium</button>
+              <button type="hard" class="waves-effect waves-light btn-small difficultyButtons" @click.stop="setDifficulty(i, 'hard');">Hard</button>
             </div>
 
             <div class="delete-container" v-if="task.difficulty !== 'notSet'">
-                <button type="delete" @click.stop="deleteTask(i);">X</button>
+                <button class="waves-effect waves-light btn-small" type="delete" @click.stop="deleteTask(i);"><i class="tiny material-icons">clear</i></button>
             </div>
           </li>
         </ul>
       </div>
 </section>
 
-<button type="sortDate" @click="sortDate();">Date</button>
-<button type="reorder" @click="reorderTask();">^</button>
+<button class="waves-effect waves-light btn-small" type="sortDate" @click="sortDate();"><i class="tiny material-icons">list</i></button>
+<button class="waves-effect waves-light btn-small" type="reorder" @click="reorderTask();"><i class="tiny material-icons">expand_less</i></button>
 
 </div>
 </template>
@@ -169,13 +176,14 @@ function createTaskFromValues(name) {
 .task-list-container{
   display: flex;
   justify-content: center;
+  padding: 10px;
 }
 .task-list {
   width: 50%;
-  border: solid black 1px;
+  background-color: #cfd8dc;
   border-radius: 15px;
-  padding-left: 10px;
-  padding-right: 10px;
+  overflow-y: auto;
+  height: 464px;
 }
 
 .task-list ul {
@@ -184,39 +192,32 @@ function createTaskFromValues(name) {
 }
 
 .task-list li {
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-left: 7px;
-    border-top: solid black 1px;
-    border-bottom: solid black 1px;
+  padding: 20px;
+  padding-left: 7px;
+  margin: 10px;
 }
 .notSet {
-  background-color: yellow;
+  padding: 20px;
+  font-size: 20px;
+  background-color: #607d8b;
+
 }
 .easy {
-    background-color: green;
+  padding: 20px;
+  font-size: 20px;
+  background-color: #81c784;
 }
 .medium {
-    background-color: blue;
+  padding: 20px;
+  font-size: 20px;
+  background-color: #dce775;
 }
 .hard {
-    background-color: purple;
+  padding: 20px;
+  font-size: 20px;
+  background-color: #e57373;
 }
-.delete-container {
-    position: relative;
-    right: 0px;
-}
-#page {
-  border: solid black 1px;
-  margin: auto;
-}
-
-#todoList {
-  border: solid black 1px;
-  display: inline-block;
-  position: relative;
-  text-align: left;
-  width: 297px;
-  padding: 0px;
+.difficultyButtons {
+  margin: 0px 10px 0px 0px;
 }
 </style>
