@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <Header />
+    <Player />
     <Index />
     <Footer />
   </div>
@@ -15,14 +16,17 @@ import Habits from "./components/Habits";
 import Index from "./components/Index";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Player from "./components/Player";
 import VueRouter from 'vue-router';
+import Vuex from 'vuex';
 
 export default {
   name: "App",
   components: {
     Index,
     Header,
-    Footer
+    Footer,
+    Player
   }
 };
 </script>

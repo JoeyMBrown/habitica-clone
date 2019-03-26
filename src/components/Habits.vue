@@ -138,13 +138,34 @@ export default {
       if (task.difficulty !== 'notSet') {
         task.finishedTimes++;
         this.completedTasks.push(task);
+        this.handleEXP(task);
         this.saveRepeatTasks1(task, i);
-        console.log('Here is all the finished tasks: ', this.completedTasks);
+        //console.log('Here is all the finished tasks: ', this.completedTasks);
       } else if (task.difficulty === 'notSet') {
         alert("Please select a difficulty before finishing!");
-      } else if(task.finished === true) {
-        alert("You've already finished this task");
+      } 
+    },
+    handleEXP(task) {
+      if (task.difficulty === "easy") {
+        this.$store.commit('easyReward', {
+          gold: 20,
+          exp: 10
+          });
+        console.log(this.$store.state.player);
+        console.log("Easy task " + this.$store.state.player.exp);
+      } else if (task.difficulty === "medium") {
+        this.$store.commit('mediumReward', {
+          gold: 30,
+          exp: 20
+          });
+      } else if (task.difficulty === "hard") {
+        this.$store.commit('hardReward', {
+          gold: 40,
+          exp: 30
+          });
       }
+      this.$store.commit('levelUp');
+      console.log('level when using store levelup:' + this.$store.state.player.level); 
     }
   }
 };
@@ -211,7 +232,7 @@ function createTaskFromValues(name) {
 .hard {
   padding: 20px;
   font-size: 20px;
-  background-color: #e57373;
+  background-color: #d50000;
 }
 .difficultyButtons {
   margin: 0px 10px 0px 0px;

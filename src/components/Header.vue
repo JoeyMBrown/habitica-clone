@@ -43,4 +43,7 @@ export default {
 .header-color1{
     background-color: rgb(51,51,51,0.08);
 }
+.router-link-exact-active {
+  color: yellow;
+}
 </style>

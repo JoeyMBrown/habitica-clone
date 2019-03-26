@@ -15,10 +15,6 @@ export default {
 
 
 <style scoped>
-#router{
-
-}
-
 #taskList{
   border: solid black 1px;
   padding-top: 20px;
