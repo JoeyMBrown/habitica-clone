@@ -26,7 +26,6 @@ const router = new VueRouter({
 
 Vue.use(Vuex)
 
-Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     player: {
@@ -45,7 +44,7 @@ const store = new Vuex.Store({
             strength: 1,
             dexterity: 1,
             intelligence: 1
-            }
+      }
     }
   },
     mutations: {

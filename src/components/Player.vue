@@ -1,17 +1,38 @@
 <template>
   <div class="col s12 m7">
     <div class="card horizontal">
-      <div class="card-image">
-        <img src="https://lorempixel.com/100/190/nature/6">
+      <div class="card-image border">
+        <img src="https://orig06.deviantart.net/ab25/f/2014/330/6/9/pixel_art_raffle_sprite_ezio_from_assassin_s_creed_by_justingamedesign-d87t8nl.png">
       </div>
       <div class="card-stacked">
         <div class="card-content">
           <ul>
-              <li>Name: {{ playerName }}<br />HP: {{ playerHp }}%<br />MP: {{ playerMp }}%<br />Level: {{ playerLevel }}<br />Exp: {{ playerExp }}%<br />Gold: {{ playerGold }}</li>
+              <li>   
+                <div id="light-red" class="progress">
+                  <div id="red" class="determinate" v-bind:style="'width: ' + playerHpPercent + '%'"></div>
+                </div>
+                Health: {{ playerHp }} / {{ playerMaxhp }}
+              <br />
+
+              <div id="light-yellow" class="progress">
+                <div id="yellow" class="determinate" v-bind:style="'width: ' + playerExpPercent + '%'"></div>
+              </div>
+                EXP: {{ playerExp }} / {{ playerExpNeeded }}
+              <br />
+
+              <div id="light-blue" class="progress">
+                <div id="blue" class="determinate" v-bind:style="'width: ' + playerMpPercent + '%'"></div>
+              </div>
+              MP: {{ playerMp }} / {{ playerMaxmp }}</li>
           </ul>
         </div>
         <div class="card-action">
-          <a href="#">This is a link</a>
+          <div>
+          <p id="playerName" class="left">{{ playerName }}</p>
+          <p id="playerGold" class="right">Gold: {{ playerGold }}</p>
+          </div>
+          <br />
+          <p id="playerLevel">Level: {{ playerLevel }}</p>
         </div>
       </div>
     </div>
@@ -24,7 +45,7 @@ export default {
   data() {
     return {
       items: [],
-      playerArr: []
+      playerArr: [],
     };
   },
   computed: {
@@ -34,14 +55,32 @@ export default {
       playerLevel() {
         return this.$store.state.player.level;
       },
-      playerExp() {
+      playerExpPercent() {
         return Math.floor(((this.$store.state.player.exp / this.$store.state.player.expNeeded) * 100));
       },
-      playerHp() {
+      playerExp () {
+        return this.$store.state.player.exp;
+      },
+      playerExpNeeded () {
+        return Math.floor(this.$store.state.player.expNeeded);
+      },
+      playerHpPercent() {
         return Math.floor(((this.$store.state.player.hp / this.$store.state.player.maxhp) * 100));
       },
-      playerMp() {
+      playerHp () {
+        return this.$store.state.player.hp;
+      },
+      playerMaxhp () {
+        return this.$store.state.player.maxhp;
+      },
+      playerMpPercent() {
         return Math.floor(((this.$store.state.player.mana / this.$store.state.player.maxmana) * 100));
+      },
+      playerMp () {
+        return this.$store.state.player.hp;
+      },
+      playerMaxmp () {
+        return this.$store.state.player.maxmana;
       },
       playerGold() {
         return this.$store.state.player.gold;
@@ -109,4 +148,36 @@ export default {
 </script>
 
 <style scoped>
+#red {
+  background-color: #c62828;
+}
+#light-red {
+  background-color: #ef9a9a;
+}
+#yellow {
+background-color: #f4ff81;
+}
+#light-yellow {
+background-color: #f9fbe7;
+}
+#blue {
+background-color: #039be5;
+}
+#light-blue {
+background-color: #b3e5fc;
+}
+#playerName {
+  display: inline;
+}
+#playerGold {
+  display: inline;
+}
+#playerLevel {
+  position: absolute;
+  top: 50%;
+  left: 20;
+}
+.border {
+  border: 1px solid black;
+}
 </style>

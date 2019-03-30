@@ -7,7 +7,7 @@
       <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><a href="#">Battle</a></li>
-        <li><a href="#">Inventory</a></li>
+        <li><a href="#">Inventory</a></li> 
         <li><a href="#">Store</a></li>
       </ul>
     </div>

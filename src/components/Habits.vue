@@ -1,6 +1,6 @@
 <template>
 <div>
-    <section class="form-container">
+   <!-- <section class="form-container">
          <div class="task-form">
         <h2>Habits</h2>
 
@@ -16,10 +16,10 @@
       </div>
     </form>
     </div>
-    </section>
+    </section> -->
 
-    <section class="task-list-container">
-        <div class="task-list z-depth-2">
+    <section class="task-list-container row">
+        <div class="task-list z-depth-2 col s12">
         <ul>
           <li
             :key="i"
@@ -44,8 +44,9 @@
         </ul>
       </div>
     </section>
-    <button class="waves-effect waves-light btn-small" type="sortDate" @click="sortDate();"><i class="tiny material-icons">list</i></button>
+   <!-- <button class="waves-effect waves-light btn-small" type="sortDate" @click="sortDate();"><i class="tiny material-icons">list</i></button>
     <button class="waves-effect waves-light btn-small" type="reorder" @click="reorderTask();"><i class="tiny material-icons">expand_less</i></button>
+    -->
 </div>
 </template>
 
