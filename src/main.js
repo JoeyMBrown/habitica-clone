@@ -45,6 +45,18 @@ const store = new Vuex.Store({
             dexterity: 1,
             intelligence: 1
       }
+    },
+    showModal: {
+      boolean: false
+    },
+    tasks: {
+      completedTasks: [],
+      toDos: [],
+      dailies: [],
+      habits: []
+    },
+    display: {
+      taskList: ""
     }
   },
     mutations: {
@@ -77,6 +89,23 @@ const store = new Vuex.Store({
       hardReward (state, payload) {
         state.player.gold += payload.gold;
         state.player.exp += payload.exp;
+      },
+      displayModal(state, boolean) {
+        state.showModal.boolean = boolean;
+      },
+      createTask(state, payload) {
+        state.tasks.habits.unshift({
+          name: payload.name,
+          created: payload.created,
+          finishedTimes: payload.finishedTimes,
+          difficulty: payload.difficulty
+        })
+      },
+      finishTask(state, i) {
+        state.tasks.completedTasks.unshift(state.tasks.habits[i]);
+      },
+      display(state, value) {
+        state.display.taskList = value;
       }
     }
   })

@@ -87,13 +87,9 @@ export default {
       }
     },
   created(){
-      if(!this.$store.state.player.name) {
           let name = prompt("Please create a name for your character!", "Joe");
           this.$store.commit('createPlayer', name);
-          console.log(this.$store.state.player);
-      } else if (this.$store.state.player.name) {
-          console.log("Name is: " + this.$store.state.player.name)
-      }
+
         /*Here I'm checking for items in the items array, if there are none, create and save the example sword.*/
       let savedItems = localStorage.getItem('items');
       if(!savedItems) {
@@ -126,12 +122,6 @@ export default {
                     }
                 }
             },
-        savePlayer () {
-            let player = localStorage.getItem('player');
-            JSON.parse(player);
-            this.playerArr[0] = player;
-            console.log("I'm being called");
-        },
         createSword (name, description, strength, dexterity, intelligence) {
             return {
             name,
