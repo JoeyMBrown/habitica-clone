@@ -110,13 +110,23 @@ export default {
       } else if(taskSelect.value === "Habit") {
         this.$store.commit('createTask', {
 
+          type: "Habit",
           name: this.fields.textBoxValue,
           created: `${new Date().getMonth() + 1}/${new Date().getDate()}/${new Date().getFullYear()}`,
           finishedTimes: 0,
           difficulty: taskDifficulty.value
         });
-        this.fields.textBoxValue = "";
+      } else if(taskSelect.value === "Todo") {
+        this.$store.commit('createTask', {
+
+          type: "Todo",
+          name: this.fields.textBoxValue,
+          created: `${new Date().getMonth() + 1}/${new Date().getDate()}/${new Date().getFullYear()}`,
+          finished: false,
+          difficulty: taskDifficulty.value
+        });
       }
+      this.fields.textBoxValue = "";
     }
   }
 };

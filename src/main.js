@@ -94,15 +94,34 @@ const store = new Vuex.Store({
         state.showModal.boolean = boolean;
       },
       createTask(state, payload) {
-        state.tasks.habits.unshift({
-          name: payload.name,
-          created: payload.created,
-          finishedTimes: payload.finishedTimes,
-          difficulty: payload.difficulty
-        })
+        if(payload.type === "Habit") {
+          state.tasks.habits.unshift({
+            
+            type: payload.type,
+            name: payload.name,
+            created: payload.created,
+            finishedTimes: payload.finishedTimes,
+            difficulty: payload.difficulty
+          })
+        } else if (payload.type === "Todo") {
+          state.tasks.toDos.unshift({
+
+            type: payload.type,
+            name: payload.name,
+            created: payload.created,
+            finished: payload.finished,
+            difficulty: payload.difficulty
+          })
+        }
       },
-      finishTask(state, i) {
+      finishHabit(state, i) {
         state.tasks.completedTasks.unshift(state.tasks.habits[i]);
+      },
+      finishtoDos(state, i) {
+        state.tasks.completedTasks.unshift(state.tasks.toDos[i]);
+      },
+      deleteTask(state, i) {
+        state.tasks.toDos.splice(i, 1);
       },
       display(state, value) {
         state.display.taskList = value;

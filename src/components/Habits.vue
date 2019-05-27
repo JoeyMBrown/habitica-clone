@@ -9,7 +9,7 @@
             @click="handleClickForItem(task, i);" v-bind:id="i" :class="`${task.difficulty} z-depth-2`"
           >
             <!-- TASK INFO -->
-            {{  `${task.name} - ${task.difficulty} - ${task.created} - ${task.finishedTimes}`}}
+            {{`${task.name} - ${task.difficulty} - ${task.created} - ${task.finishedTimes}`}}
           </li>
         </ul>
       </div>
@@ -28,14 +28,14 @@ export default {
     // When called:
     //1. item at index is removed. (1) specifies how many indexes to remove.
     deleteTask(i){
-        this.$store.state.tasks.habits.splice(i, 1);
+      this.$store.state.tasks.habits.splice(i, 1);
     },
     reorderTask(){
-    var x = this.$store.state.tasks.habits.shift();
-    this.$store.state.tasks.habits.push(x);
+      var x = this.$store.state.tasks.habits.shift();
+      this.$store.state.tasks.habits.push(x);
     },
     sortDate() {
-        this.$store.state.tasks.habits.reverse();
+      this.$store.state.tasks.habits.reverse();
     },
 
     //When <li> is clicked:
@@ -43,9 +43,8 @@ export default {
     //2. Run finishTask which unshifts a task to completedTasks array
     //3. Reward based on difficulty
     handleClickForItem(task, i) {
-      console.log("task: " + task.difficulty + " i: " + i );
         task.finishedTimes++;
-        this.$store.commit('finishTask', i);
+        this.$store.commit('finishHabit', i);
         this.handleEXP(task);
     },
     handleEXP(task) {
