@@ -30,9 +30,9 @@
 
 <select id="task-difficulty">
     <option value="">--Please choose an option--</option>
-    <option value="Easy">Easy</option>
-    <option value="Medium">Medium</option>
-    <option value="Hard">Hard</option>
+    <option value="easy">Easy</option>
+    <option value="medium">Medium</option>
+    <option value="hard">Hard</option>
 </select>
 
 </form>
@@ -101,6 +101,9 @@ export default {
       console.log("Made it to display()");
       this.$store.commit('display', "Habits");
     },
+    /*reloadPage() {
+      window.location.reload(true);
+    },*/
     submitTask(evt, val, val1) {
       var taskSelect = document.getElementById("task-select");
       var taskDifficulty = document.getElementById("task-difficulty");
@@ -117,15 +120,29 @@ export default {
           difficulty: taskDifficulty.value
         });
       } else if(taskSelect.value === "Todo") {
-        this.$store.commit('createTask', {
+        var data = {
+          "todotasks": {"task":`${this.fields.textBoxValue}`,"difficulty":`${taskDifficulty.value}`,"completed":false}
+        }
+          fetch("http://localhost:4000/api/todos/create", {
+            method: 'POST',
+            body: JSON.stringify(data), // data can be `string` or {object}!
+            headers:{
+              'Content-Type': 'application/json'
+            }
+          }).then(res => res.json())
+          .then(response => console.log('Success:', JSON.stringify(response)))
+          .catch(error => console.error('Error:', error));
+
+          //this.reloadPage();
+
+          /*this.$store.commit('createTask', {
 
           type: "Todo",
           name: this.fields.textBoxValue,
           created: `${new Date().getMonth() + 1}/${new Date().getDate()}/${new Date().getFullYear()}`,
           finished: false,
-          difficulty: taskDifficulty.value
-        });
-      }
+          difficulty: taskDifficulty.value*/
+      };
       this.fields.textBoxValue = "";
     }
   }
