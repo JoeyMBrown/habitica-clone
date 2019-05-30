@@ -55,7 +55,7 @@ export default {
     },
     addCompletedTask(task) {
             var data = {"completedtasks": {"completed": `${task.completed}`,"difficulty": task.difficulty,"task": `${task.task}`}};
-        fetch("http://localhost:4000/api/completedtasks/create", {
+        fetch("http://localhost:4000/api/completedtasks", {
             method: 'POST',
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers:{
