@@ -98,7 +98,7 @@ export default {
       this.$store.commit('displayModal', false);
     },
     display() {
-      console.log("Made it to display()");
+      //console.log("Made it to display()");
       this.$store.commit('display', "Habits");
     },
     /*reloadPage() {
@@ -138,16 +138,20 @@ export default {
           .then(response => console.log('Success:', JSON.stringify(response)))
           .catch(error => console.error('Error:', error));
 
-          //this.reloadPage();
-
-          /*this.$store.commit('createTask', {
-
-          type: "Todo",
-          name: this.fields.textBoxValue,
-          created: `${new Date().getMonth() + 1}/${new Date().getDate()}/${new Date().getFullYear()}`,
-          finished: false,
-          difficulty: taskDifficulty.value*/
-      };
+      } else if(taskSelect.value === "Daily") {
+        var data = {
+          "dailytasks": {"task":`${this.fields.textBoxValue}`,"difficulty":`${taskDifficulty.value}`,"completed":false}
+        }
+          fetch("http://localhost:4000/api/dailies/", {
+            method: 'POST',
+            body: JSON.stringify(data), // data can be `string` or {object}!
+            headers:{
+              'Content-Type': 'application/json'
+            }
+          }).then(res => res.json())
+          .then(response => console.log('Success:', JSON.stringify(response)))
+          .catch(error => console.error('Error:', error));
+      }
       this.fields.textBoxValue = "";
     }
   }
