@@ -1,7 +1,7 @@
 <template>
-<div>
+  <div>
     <section class="task-list-container row">
-        <div class="task-list z-depth-2 col s12">
+      <div class="task-list z-depth-2 col s12">
         <ul>
           <li
             :key="i"
@@ -9,12 +9,13 @@
             @click="handleClickForItem(task, i);" v-bind:id="i" :class="`${task.difficulty} z-depth-2`"
           >
             <!-- TASK INFO  - ${task.finishedTimes} -->
-            {{`${task.task} - ${task.difficulty} - ${task.inserted_at}`}}
+            {{`${task.task} - ${task.difficulty} - ${task.inserted_at}`}}  <sub>13</sub>
+
           </li>
         </ul>
       </div>
     </section>
-</div>
+  </div>
 </template>
 
 
@@ -45,6 +46,18 @@ export default {
         this.habitTasks[i].inserted_at = fixedDate;
       }
     },
+    addCompletedTask(task) {
+      var data = {"completedtasks": {"completed": `${task.completed}`,"difficulty": task.difficulty,"task": `${task.task}`}};
+      fetch("http://localhost:4000/api/completedtasks", {
+        method: 'POST',
+        body: JSON.stringify(data), // data can be `string` or {object}!
+        headers:{
+          'Content-Type': 'application/json'
+        }
+      }).then(res => res.json())
+      .then(response => console.log('Success:', JSON.stringify(response)))
+      .catch(error => console.error('Error:', error));
+    },
     // When called:
     //1. item at index is removed. (1) specifies how many indexes to remove.
     deleteTask(i){
@@ -63,31 +76,28 @@ export default {
     //2. Run finishTask which unshifts a task to completedTasks array
     //3. Reward based on difficulty
     handleClickForItem(task, i) {
-        task.finishedTimes++;
-        this.$store.commit('finishHabit', i);
+        //task.finishedTimes++;
+        this.addCompletedTask(task);
         this.handleEXP(task);
     },
     handleEXP(task) {
-      if (task.difficulty === "Easy") {
+      if (task.difficulty === "easy") {
         this.$store.commit('easyReward', {
           gold: 20,
           exp: 10
           });
-      } else if (task.difficulty === "Medium") {
+      } else if (task.difficulty === "medium") {
         this.$store.commit('mediumReward', {
           gold: 30,
           exp: 20
           });
-      } else if (task.difficulty === "Hard") {
+      } else if (task.difficulty === "hard") {
         this.$store.commit('hardReward', {
           gold: 40,
           exp: 30
           });
       }
       this.$store.commit('levelUp');
-    },
-    habits () {
-     return this.$store.state.tasks.habits;
     }
   }
 };

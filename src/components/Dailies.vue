@@ -1,56 +1,21 @@
 <template>
-<div>
-<!--<section class="form-container">
-    <div class="task-form">
-        <h2>Dailies</h2>
-
-
-  <form @submit.prevent="submitForm1">
-    <div class="row">
-        <div class="col s12">
-          Create a Daily Task:
-          <div class="input-field inline">
-            <input v-model="fields1.textBoxValue" id="email_inline" type="text" placeholder="e.g. Water the gnomes">
-          </div>
-          <button type="submit" class="waves-effect waves-light btn-small difficultyButtons">submit</button>
-        </div>
-      </div>
-    </form>
-    </div>
-    </section>-->
-
-<section class="task-list-container row">
-<div class="task-list z-depth-2 col s12">
+  <div>
+    <section class="task-list-container row">
+      <div class="task-list z-depth-2 col s12">
         <ul>
           <li
             :key="i"
-            v-for="(task, i) in repeatTasks"
-            @click="handleClickForItem1(task, i);" v-bind:id="i" :class="`${task.difficulty} z-depth-2`"
+            v-for="(task, i) in dailyTasks"
+            @click="handleClickForItem(task, i);" v-bind:id="i" :class="`${task.difficulty} z-depth-2`"
           >
           <!-- TASK INFO -->
-            {{  `${task.name} - ${task.difficulty} - ${task.created} - ${task.finishedTimes}`}}
-
-          <!-- SET DIFFICULTY -->
-            <div class="buttons-container" v-if="task.difficulty === 'notSet'">
-              <button type="easy" class="waves-effect waves-light btn-small difficultyButtons" @click.stop="setDifficulty1(i, 'easy');">Easy</button>
-              <button type="medium" class="waves-effect waves-light btn-small difficultyButtons" @click.stop="setDifficulty1(i, 'medium');">Medium</button>
-              <button type="hard" class="waves-effect waves-light btn-small difficultyButtons" @click.stop="setDifficulty1(i, 'hard');">Hard</button>
-            </div>
-
-            <div class="delete-container" v-if="task.difficulty !== 'notSet'">
-                <button class="waves-effect waves-light btn-small" type="delete" @click.stop="deleteTask(i);"><i class="tiny material-icons">clear</i></button>
-            </div>
+            {{  `${task.task} - ${task.difficulty} - ${task.inserted_at}`}} <sub>13</sub>
 
           </li>
         </ul>
       </div>
-</section>
-
-<!--      Buttons for reordering - want to switch to user re-order
-<button class="waves-effect waves-light btn-small" type="sortDate" @click="sortDate();"><i class="tiny material-icons">list</i></button>
-<button class="waves-effect waves-light btn-small" type="reorder" @click="reorderTask();"><i class="tiny material-icons">expand_less</i></button>
--->
-</div>
+    </section>
+  </div>
 </template>
 
 
@@ -62,94 +27,54 @@ export default {
   },
   data() {
     return {
-      //Needs optimized
-      fields1: {
-        textBoxValue: ""
-      },
       //Objects connected to: finished, finishedTimes, difficulty
-      repeatTasks: [],
-      completedTasks: []
-    };
-  },
-  created(){
-    let repeatTasks = localStorage.getItem('repeatTasks');
-    let completedTasks = localStorage.getItem('completedTasks');
-    if (repeatTasks) {
-      let parsedRepeatTasks = JSON.parse(repeatTasks);
-      //console.log('RepeatTasks var in created function: ' + repeatTasks);
-      this.repeatTasks = parsedRepeatTasks;
-      //console.log('RepeatTasks Lists, post Parsed: ' + this.repeatTasks);
-    }
-    if(completedTasks) {
-      let parsedCompletedTasks = JSON.parse(completedTasks);
-      this.completedTasks = parsedCompletedTasks;
+      dailyTasks: []
     }
   },
-  watch: {
-    repeatTasks: function(val) {
-      if(val) {
-        console.log('SAVING REPEAT TASKS: ', JSON.stringify(val));
-        localStorage.setItem('repeatTasks', JSON.stringify(val));
-      }
-    }
-},
+  created: function(){
+    this.getTasks('http://localhost:4000/api/dailies/')
+  },
   methods: {
-    saveRepeatTasks(){
-      localStorage.setItem('repeatTasks', JSON.stringify(this.repeatTasks));
-      localStorage.setItem('completedTasks', JSON.stringify(this.completedTasks));
+    getTasks(url) {
+      fetch(url)
+        .then(response => {return response.json()}) // parses JSON response into native Javascript objects 
+        .then(res => {this.dailyTasks = res.data.reverse(), this.getDates() })
+      },
+    getDates(){
+      for(var i = 0; i < this.dailyTasks.length; i++) {
+        var fixedDate = this.dailyTasks[i].inserted_at.slice(5, 10)
+        this.dailyTasks[i].inserted_at = fixedDate;
+      }
+    },
+    addCompletedTask(task) {
+      var data = {"completedtasks": {"completed": `${task.completed}`,"difficulty": task.difficulty,"task": `${task.task}`}};
+      fetch("http://localhost:4000/api/completedtasks", {
+        method: 'POST',
+        body: JSON.stringify(data), // data can be `string` or {object}!
+        headers:{
+          'Content-Type': 'application/json'
+        }
+      }).then(res => res.json())
+      .then(response => console.log('Success:', JSON.stringify(response)))
+      .catch(error => console.error('Error:', error));
     },
     deleteTask(i){
-        this.repeatTasks.splice(i, 1);
-        console.log(this.repeatTasks);//Removes at element i, 1 index is removed
+        this.dailyTasks.splice(i, 1);
     },
     reorderTask(){
         var x = this.repeatTasks.shift();
         this.repeatTasks.push(x);
         this.saveRepeatTasks();
 },
-    //Needs optimized
-    //On submit button click
-    submitForm1(evt, val) {
-      if (!this.fields1.textBoxValue || this.fields1.textBoxValue === "") {
-        console.warn('User tried to submit empty task.');
-      } else {
-        const taskName = this.fields1.textBoxValue;
-        const task = createTaskFromValues(taskName);
-
-        this.repeatTasks.push(task);
-        this.fields1.textBoxValue = "";
-      }
-    },
  //May work, check for optimization
     sortDate() {
       this.repeatTasks.reverse();
     },
-      // 1 - easy
-      // 2 - medium
-      // 3 - hard
-    setDifficulty1(index, difficulty) {
-      this.repeatTasks[index].difficulty = difficulty;
-      this.saveRepeatTasks();
-      var list = document.getElementById(index);
-      if (difficulty === 'easy') {
-        list.className ="easy";
-      } else if (difficulty === 'medium') {
-          list.className = "medium";
-      } else if (difficulty === 'hard') {
-          list.className = "hard";
-      }
-    },
     //Needs optimized
-    handleClickForItem1(task, i) {
-      console.log(this.repeatTasks);
-      if (task.difficulty !== 'notSet') {
-        task.finishedTimes++;
-        this.completedTasks.push(task);
+    handleClickForItem(task, i) {
+        //task.finishedTimes++;
+        this.addCompletedTask(task);
         this.handleEXP(task);
-        this.saveRepeatTasks(task, i);
-      } else if (task.difficulty === 'notSet') {
-        alert("Please select a difficulty before finishing!");
-      }
     },
     handleEXP(task) {
       if (task.difficulty === "easy") {
@@ -157,8 +82,6 @@ export default {
           gold: 20,
           exp: 10
           });
-        console.log(this.$store.state.player);
-        console.log("Easy task " + this.$store.state.player.exp);
       } else if (task.difficulty === "medium") {
         this.$store.commit('mediumReward', {
           gold: 30,
