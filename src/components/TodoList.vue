@@ -47,19 +47,11 @@ export default {
         }
       },
     deleteTask(id, index) {
-      var data = {"id": `${id}`};
-        fetch("http://localhost:4000/api/todos/delete", {
+        fetch("http://localhost:4000/api/todos/" + `${id}`, {
             method: 'DELETE',
-            body: JSON.stringify(data), // data can be `string` or {object}!
-            headers:{
-              'Content-Type': 'application/json'
-            }
-          }).then(res => res.json())
-          .then(response => console.log('Success:', JSON.stringify(response)))
-          .catch(error => console.error('Error:', error));
-
-          console.log("index to delete: " + index);
+        });
           this.todoTasks.splice(index, 1);
+          console.log("index to delete: " + index);
     },
     addCompletedTask(task) {
             var data = {"completedtasks": {"completed": `${task.completed}`,"difficulty": task.difficulty,"task": `${task.task}`}};
