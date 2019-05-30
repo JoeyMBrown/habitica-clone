@@ -111,19 +111,24 @@ export default {
       if(taskSelect.value === "" || taskDifficulty.value === "" || this.fields.textBoxValue === "") {
         alert("Please select a valid option!");
       } else if(taskSelect.value === "Habit") {
-        this.$store.commit('createTask', {
+        var data = {
+          "habittasks": {"task":`${this.fields.textBoxValue}`,"difficulty":`${taskDifficulty.value}`,"completed":false}
+        }
+          fetch("http://localhost:4000/api/habits/", {
+            method: 'POST',
+            body: JSON.stringify(data), // data can be `string` or {object}!
+            headers:{
+              'Content-Type': 'application/json'
+            }
+          }).then(res => res.json())
+          .then(response => console.log('Success:', JSON.stringify(response)))
+          .catch(error => console.error('Error:', error));
 
-          type: "Habit",
-          name: this.fields.textBoxValue,
-          created: `${new Date().getMonth() + 1}/${new Date().getDate()}/${new Date().getFullYear()}`,
-          finishedTimes: 0,
-          difficulty: taskDifficulty.value
-        });
       } else if(taskSelect.value === "Todo") {
         var data = {
           "todotasks": {"task":`${this.fields.textBoxValue}`,"difficulty":`${taskDifficulty.value}`,"completed":false}
         }
-          fetch("http://localhost:4000/api/todos/create", {
+          fetch("http://localhost:4000/api/todos/", {
             method: 'POST',
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers:{
