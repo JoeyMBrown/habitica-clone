@@ -38,7 +38,7 @@ export default {
     getTasks(url) {
       fetch(url)
         .then(response => {return response.json()}) // parses JSON response into native Javascript objects 
-        .then(res => {this.todoTasks = res.data.reverse(), console.log(this.todoTasks[0]), this.getDates() })
+        .then(res => {this.todoTasks = res.data.reverse(), this.getDates() })
       },
       getDates(){
         for(var i = 0; i < this.todoTasks.length; i++) {

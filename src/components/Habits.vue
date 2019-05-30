@@ -5,11 +5,11 @@
         <ul>
           <li
             :key="i"
-            v-for="(task, i) in habits()"
+            v-for="(task, i) in habitTasks"
             @click="handleClickForItem(task, i);" v-bind:id="i" :class="`${task.difficulty} z-depth-2`"
           >
-            <!-- TASK INFO -->
-            {{`${task.name} - ${task.difficulty} - ${task.created} - ${task.finishedTimes}`}}
+            <!-- TASK INFO  - ${task.finishedTimes} -->
+            {{`${task.task} - ${task.difficulty} - ${task.inserted_at}`}}
           </li>
         </ul>
       </div>
@@ -24,7 +24,27 @@ export default {
   props: {
     msg: String
   },
+  data() {
+    return {
+      //Objects connected to: finished, finishedTimes, difficulty
+      habitTasks: []
+    }
+  },
+  created: function(){
+    this.getTasks('http://localhost:4000/api/habits/')
+  },
   methods: {
+      getTasks(url) {
+    fetch(url)
+      .then(response => {return response.json()}) // parses JSON response into native Javascript objects 
+      .then(res => {this.habitTasks = res.data.reverse(), this.getDates() })
+    },
+    getDates(){
+      for(var i = 0; i < this.habitTasks.length; i++) {
+        var fixedDate = this.habitTasks[i].inserted_at.slice(5, 10)
+        this.habitTasks[i].inserted_at = fixedDate;
+      }
+    },
     // When called:
     //1. item at index is removed. (1) specifies how many indexes to remove.
     deleteTask(i){
@@ -96,17 +116,17 @@ export default {
   padding-left: 7px;
   margin: 10px;
 }
-.Easy {
+.easy {
   padding: 20px;
   font-size: 20px;
   background-color: #81c784;
 }
-.Medium {
+.medium {
   padding: 20px;
   font-size: 20px;
   background-color: #dce775;
 }
-.Hard {
+.hard {
   padding: 20px;
   font-size: 20px;
   background-color: #d50000;
