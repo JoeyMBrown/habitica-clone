@@ -94,7 +94,6 @@ export default {
           });
       }
       this.$store.commit('levelUp');
-      console.log('level when using store levelup:' + this.$store.state.player.level);
     }
   }
 };

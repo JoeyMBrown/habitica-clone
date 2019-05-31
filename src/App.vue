@@ -76,17 +76,6 @@ export default {
       }
     };
   },
-  /*computed: {
-    showModal() {
-      this.$store.commit('displayModal', true);
-    },
-    checkModal() {
-      return this.$store.state.showModal.boolean
-    },
-    closeModal() {
-      this.$store.commit('displayModal', false);
-    }
-  },*/
     methods: {
     showModal() {
       this.$store.commit('displayModal', true);
@@ -101,9 +90,6 @@ export default {
       //console.log("Made it to display()");
       this.$store.commit('display', "Habits");
     },
-    /*reloadPage() {
-      window.location.reload(true);
-    },*/
     submitTask(evt, val, val1) {
       var taskSelect = document.getElementById("task-select");
       var taskDifficulty = document.getElementById("task-difficulty");

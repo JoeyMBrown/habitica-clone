@@ -43,10 +43,6 @@ const store = new Vuex.Store({
       boolean: false
     },
     tasks: {
-      completedTasks: [],
-      toDos: [],
-      dailies: [],
-      habits: [],
       playerArr: []
     },
     display: {
@@ -80,9 +76,6 @@ const store = new Vuex.Store({
             console.log('get more exp nerd');
         }
       },
-      createPlayer (state, name) {
-        state.player.name = name;
-      },
       easyReward (state, payload) {
         state.player.gold += payload.gold;
         state.player.exp += payload.exp;
@@ -97,33 +90,6 @@ const store = new Vuex.Store({
       },
       displayModal(state, boolean) {
         state.showModal.boolean = boolean;
-      },
-      createTask(state, payload) {
-        if(payload.type === "Habit") {
-          state.tasks.habits.unshift({
-            
-            type: payload.type,
-            name: payload.name,
-            created: payload.created,
-            finishedTimes: payload.finishedTimes,
-            difficulty: payload.difficulty
-          })
-        } else if (payload.type === "Todo") {
-          state.tasks.toDos.unshift({
-
-            type: payload.type,
-            name: payload.name,
-            created: payload.created,
-            finished: payload.finished,
-            difficulty: payload.difficulty
-          })
-        }
-      },
-      finishHabit(state, i) {
-        state.tasks.completedTasks.unshift(state.tasks.habits[i]);
-      },
-      finishtoDos(state, i) {
-        state.tasks.completedTasks.unshift(state.tasks.toDos[i]);
       },
       deleteTask(state, i) {
         state.tasks.toDos.splice(i, 1);
