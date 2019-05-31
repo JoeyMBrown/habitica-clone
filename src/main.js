@@ -67,7 +67,7 @@ const store = new Vuex.Store({
       levelUp (state) {
           if(state.player.exp >= state.player.expneeded) {
         state.player.exp = 0;
-        state.player.expneeded = state.player.expneeded * 1.2;
+        state.player.expneeded = Math.floor(state.player.expneeded * 1.2);
         state.player.maxhp = state.player.maxhp + 5;
         state.player.maxmana = state.player.maxmana + 5;
         state.player.level++
