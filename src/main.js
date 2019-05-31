@@ -46,13 +46,17 @@ const store = new Vuex.Store({
       completedTasks: [],
       toDos: [],
       dailies: [],
-      habits: []
+      habits: [],
+      playerArr: []
     },
     display: {
       taskList: ""
     }
   },
     mutations: {
+      updatePlayerArr (state, player0) {
+        state.tasks.playerArr[0] = player0;
+      },
       updatePlayer (state, payload) {
       state.player.exp = payload.exp;
       state.player.expneeded = payload.expneeded;

@@ -89,10 +89,7 @@ export default {
     fetch("http://localhost:4000/api/player/5")
         .then(response => {return response.json()}) // parses JSON response into native Javascript objects 
         .then(res => {this.playerArr[0] = res.data, console.log(this.playerArr[0].gold); this.updatePlayer();})
-        .catch(error => {let name = prompt("Please create a name for your character!", "Joe");
-        this.$store.commit('createPlayer', name);
-        console.log(error);
-        /*this.createPlayer(name);*/});
+        .catch(error => {let name = prompt("Please create a name for your character!", "Joe"); this.createPlayer(name);});
   },
   watch: {
     playerArr: function () {
@@ -122,11 +119,13 @@ export default {
               'Content-Type': 'application/json'
             }
           }).then(res => res.json())
-          .then(response => this.playerArr[0] = response, console.log("creating a player: " + this.playerArr))
+          .then(response => this.playerArr[0] = response, updatePlayer())
           .catch(error => console.error('Error:', error));
             },
           updatePlayer() {
-            console.log("playerArr in updatePlayer " + this.playerArr[0])
+
+            this.$store.commit('updatePlayerArr', this.playerArr[0]);
+
             this.$store.commit('updatePlayer', {
               gold: this.playerArr[0].gold,
               exp: this.playerArr[0].exp,
