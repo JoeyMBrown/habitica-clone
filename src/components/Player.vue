@@ -44,7 +44,6 @@ export default {
   name: "Player",
   data() {
     return {
-      items: [],
       playerArr: [],
     };
   },
@@ -87,52 +86,38 @@ export default {
       }
     },
   created(){
-          let name = prompt("Please create a name for your character!", "Joe");
-          this.$store.commit('createPlayer', name);
-
-        /*Here I'm checking for items in the items array, if there are none, create and save the example sword.*/
-      let savedItems = localStorage.getItem('items');
-      if(!savedItems) {
-          const sword = this.createSword('Wooden Sword', 'A simple wooden sword', 1, 1, 1);
-          this.items[0] = (sword);
-          localStorage.setItem('items', JSON.stringify(this.items));
-      } else if (savedItems) {
-          this.items = JSON.parse(savedItems);
-          console.log('items array: ' + (savedItems));
-      }
+    fetch("http://localhost:4000/api/player/1")
+        .then(response => {return response.json()}) // parses JSON response into native Javascript objects 
+        .then(res => {this.playerArr[0] = res.data; console.log("player arr is populated: " + this.playerArr);})
+        .catch(error => {let name = prompt("Please create a name for your character!", "Joe");
+        this.$store.commit('createPlayer', name);
+        this.createPlayer(name);});
   },
   methods: {
-        createPlayer (name) {
-            return {
-                name,
+        createPlayer(name) {
+                  var data = {
+          "player": {
+                name: name,
                 hp: 25,
                 mana: 25,
                 maxhp: 25,
                 maxmana: 25,
                 level: 1,
                 exp: 0,
-                expNeeded: 100,
+                expneeded: 100,
                 gold: 100,
-                inventory: [],
-                equipped: [],
-                stats: {
-                    strength: 1,
-                    dexterity: 1,
-                    intelligence: 1
-                    }
                 }
-            },
-        createSword (name, description, strength, dexterity, intelligence) {
-            return {
-            name,
-            description,
-            stats: {
-                strength,
-                dexterity,
-                intelligence
-                }
-            }
         }
+          fetch("http://localhost:4000/api/player/", {
+            method: 'POST',
+            body: JSON.stringify(data), // data can be `string` or {object}!
+            headers:{
+              'Content-Type': 'application/json'
+            }
+          }).then(res => res.json())
+          .then(response => this.playerArr[0] = resp, console.log("creating a player: " + this.playerArr))
+          .catch(error => console.error('Error:', error));
+            }
     }
 }
 </script>
