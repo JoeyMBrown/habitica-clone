@@ -71,10 +71,20 @@ const store = new Vuex.Store({
         state.player.maxhp = state.player.maxhp + 5;
         state.player.maxmana = state.player.maxmana + 5;
         state.player.level++
-        console.log("I made it to levelup")
-        } else {
-            console.log('get more exp nerd');
         }
+          state.tasks.playerArr[0] = state.player;
+
+          var data = { "player": state.tasks.playerArr[0] } 
+
+          fetch("http://localhost:4000/api/player/5", {
+            method: 'PUT',
+            body: JSON.stringify(data), // data can be `string` or {object}!
+            headers:{
+              'Content-Type': 'application/json'
+            }
+          }).then(res => res.json())
+            .then(res => console.log(res))
+          .catch(error => console.error('Error:', error));
       },
       easyReward (state, payload) {
         state.player.gold += payload.gold;
@@ -98,7 +108,7 @@ const store = new Vuex.Store({
         state.display.taskList = value;
       }
     }
-  })
+})
 
 Vue.use(VueRouter)
 
