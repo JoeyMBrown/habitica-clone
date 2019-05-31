@@ -31,7 +31,7 @@ export default {
     }
   },
   created: function(){
-    this.getTasks('http://localhost:4000/api/completedtasks/')
+    this.getTasks('http://localhost:4000/api/completedtasks/');
   },
     methods: {
       getTasks(url) {
@@ -46,9 +46,9 @@ export default {
         }
       },
         sortDate() {
-        this.$store.state.tasks.completedTasks.reverse();
-        }
+          this.$store.state.tasks.completedTasks.reverse();
     }
+  } 
 };
 </script>
 

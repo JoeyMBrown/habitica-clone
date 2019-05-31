@@ -36,15 +36,8 @@ const store = new Vuex.Store({
         maxmana: 25,
         level: 1,
         exp: 0,
-        expNeeded: 100,
-        gold: 100,
-        inventory: [],
-        equipped: [],
-        stats: {
-            strength: 1,
-            dexterity: 1,
-            intelligence: 1
-      }
+        expneeded: 100,
+        gold: 100
     },
     showModal: {
       boolean: false
@@ -60,15 +53,23 @@ const store = new Vuex.Store({
     }
   },
     mutations: {
+      updatePlayer (state, payload) {
+      state.player.exp = payload.exp;
+      state.player.expneeded = payload.expneeded;
+      state.player.maxhp = payload.maxhp;
+      state.player.maxmana = payload.maxmana;
+      state.player.level = payload.level;
+      state.player.gold = payload.gold;
+      state.player.mana = payload.mana;
+      state.player.hp = payload.hp;
+      state.player.name = payload.name;
+      },
       levelUp (state) {
-          if(state.player.exp >= state.player.expNeeded) {
+          if(state.player.exp >= state.player.expneeded) {
         state.player.exp = 0;
-        state.player.expNeeded = state.player.expNeeded * 1.2;
+        state.player.expneeded = state.player.expneeded * 1.2;
         state.player.maxhp = state.player.maxhp + 5;
         state.player.maxmana = state.player.maxmana + 5;
-        state.player.stats.strength++;
-        state.player.stats.dexterity++;
-        state.player.stats.intelligence++;
         state.player.level++
         console.log("I made it to levelup")
         } else {

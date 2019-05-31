@@ -55,13 +55,13 @@ export default {
         return this.$store.state.player.level;
       },
       playerExpPercent() {
-        return Math.floor(((this.$store.state.player.exp / this.$store.state.player.expNeeded) * 100));
+        return Math.floor(((this.$store.state.player.exp / this.$store.state.player.expneeded) * 100));
       },
       playerExp () {
         return this.$store.state.player.exp;
       },
       playerExpNeeded () {
-        return Math.floor(this.$store.state.player.expNeeded);
+        return Math.floor(this.$store.state.player.expneeded);
       },
       playerHpPercent() {
         return Math.floor(((this.$store.state.player.hp / this.$store.state.player.maxhp) * 100));
@@ -86,12 +86,19 @@ export default {
       }
     },
   created(){
-    fetch("http://localhost:4000/api/player/1")
+    fetch("http://localhost:4000/api/player/5")
         .then(response => {return response.json()}) // parses JSON response into native Javascript objects 
-        .then(res => {this.playerArr[0] = res.data; console.log("player arr is populated: " + this.playerArr);})
+        .then(res => {this.playerArr[0] = res.data, console.log(this.playerArr[0].gold); this.updatePlayer();})
         .catch(error => {let name = prompt("Please create a name for your character!", "Joe");
         this.$store.commit('createPlayer', name);
-        this.createPlayer(name);});
+        console.log(error);
+        /*this.createPlayer(name);*/});
+  },
+  watch: {
+    playerArr: function () {
+      console.log(this.playerArr[0]);
+      this.updatePlayer();
+    }
   },
   methods: {
         createPlayer(name) {
@@ -115,10 +122,24 @@ export default {
               'Content-Type': 'application/json'
             }
           }).then(res => res.json())
-          .then(response => this.playerArr[0] = resp, console.log("creating a player: " + this.playerArr))
+          .then(response => this.playerArr[0] = response, console.log("creating a player: " + this.playerArr))
           .catch(error => console.error('Error:', error));
-            }
+            },
+          updatePlayer() {
+            console.log("playerArr in updatePlayer " + this.playerArr[0])
+            this.$store.commit('updatePlayer', {
+              gold: this.playerArr[0].gold,
+              exp: this.playerArr[0].exp,
+              name: this.playerArr[0].name,
+              hp: this.playerArr[0].hp,
+              mana: this.playerArr[0].mana,
+              maxhp: this.playerArr[0].maxhp,
+              maxmana: this.playerArr[0].maxmana,
+              level: this.playerArr[0].level,
+              expneeded: this.playerArr[0].expneeded
+      })
     }
+  }
 }
 </script>
 
