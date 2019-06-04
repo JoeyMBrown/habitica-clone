@@ -9,7 +9,7 @@
             @click="handleClickForItem(task, i);" v-bind:id="i" :class="`${task.difficulty} z-depth-2`"
           >
           <!-- TASK INFO -->
-            {{  `${task.task} - ${task.difficulty} - ${task.inserted_at}`}} <sub>13</sub>
+            {{  `${task.task} - ${task.difficulty} - ${task.inserted_at}`}} <!--<sub>13</sub>-->
 
           </li>
         </ul>

@@ -55,6 +55,8 @@ import Footer from "./components/Footer";
 import Player from "./components/Player";
 import DynamicHeader from "./components/DynamicHeader";
 import DynamicFooter from "./components/DynamicFooter";
+import Signup from "./components/Signup";
+import Login from "./components/Login";
 import Modal from "./components/Modal";
 import Test from "./components/Test";
 import VueRouter from 'vue-router';
@@ -90,6 +92,13 @@ export default {
       //console.log("Made it to display()");
       this.$store.commit('display', "Habits");
     },
+    getDate(task){
+
+        var d = new Date();
+        var day = d.getDate();
+        var month = d.getMonth() + 1;
+        return {"task": `${task.task}`,"difficulty":`${task.difficulty}`,"inserted_at":`0${month}-0${day}`};
+  },
     submitTask(evt, val, val1) {
       var taskSelect = document.getElementById("task-select");
       var taskDifficulty = document.getElementById("task-difficulty");
@@ -123,6 +132,10 @@ export default {
           }).then(res => res.json())
           .then(response => console.log('Success:', JSON.stringify(response)))
           .catch(error => console.error('Error:', error));
+
+          var task = this.getDate(data.todotasks);
+
+          this.$store.commit('addTodoTask', task);
 
       } else if(taskSelect.value === "Daily") {
         var data = {

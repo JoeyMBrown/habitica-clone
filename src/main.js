@@ -6,6 +6,8 @@ import HelloWorld from "./components/HelloWorld";
 import Dailies from "./components/Dailies";
 import Habits from "./components/Habits";
 import TodoList from "./components/TodoList";
+import Signup from "./components/Signup";
+import Login from "./components/Login";
 import CompletedTasks from "./components/CompletedTasks";
 import 'materialize-css';
 
@@ -15,7 +17,9 @@ const routes = [
   { path: '/Dailies', component: Dailies},
   { path: '/Habits', component: Habits},
   { path: '/TodoList', component: TodoList},
-  { path: '/CompletedTasks', component: CompletedTasks}
+  { path: '/CompletedTasks', component: CompletedTasks},
+  { path: '/Signup', component: Signup},
+  { path: '/Login', component: Login}
 ]
 
 Vue.config.productionTip = false;
@@ -43,7 +47,8 @@ const store = new Vuex.Store({
       boolean: false
     },
     tasks: {
-      playerArr: []
+      playerArr: [],
+      todos: []
     },
     display: {
       taskList: ""
@@ -76,7 +81,7 @@ const store = new Vuex.Store({
 
           var data = { "player": state.tasks.playerArr[0] } 
 
-          fetch("http://localhost:4000/api/player/5", {
+          fetch("http://localhost:4000/api/player/1", {
             method: 'PUT',
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers:{
@@ -97,6 +102,12 @@ const store = new Vuex.Store({
       hardReward (state, payload) {
         state.player.gold += payload.gold;
         state.player.exp += payload.exp;
+      },
+      updateTodosArr (state, todosArr) {
+        state.tasks.todos = todosArr;
+      },
+      addTodoTask (state, task) {
+        state.tasks.todos.unshift(task);
       },
       displayModal(state, boolean) {
         state.showModal.boolean = boolean;

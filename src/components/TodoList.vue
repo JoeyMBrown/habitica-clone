@@ -6,7 +6,7 @@
         <ul>
           <li
             :key="i"
-            v-for="(task, i) in todoTasks"
+            v-for="(task, i) in todos"
             @click="handleClickForItem(task, i);" v-bind:id="i" :class="`${task.difficulty} z-depth-2`"
           >
             <!-- TASK INFO -->
@@ -31,6 +31,11 @@ export default {
       todoTasks: []
     }
   },
+  computed: {
+    todos() {
+      return this.$store.state.tasks.todos;
+    }
+  },
   created: function(){
     this.getTasks('http://localhost:4000/api/todos/')
   },
@@ -38,13 +43,16 @@ export default {
     getTasks(url) {
       fetch(url)
         .then(response => {return response.json()}) // parses JSON response into native Javascript objects 
-        .then(res => {this.todoTasks = res.data.reverse(), this.getDates() })
+        .then(res => {this.todoTasks = res.data.reverse(), this.getDates(), this.updateTasks() })
       },
       getDates(){
         for(var i = 0; i < this.todoTasks.length; i++) {
           var fixedDate = this.todoTasks[i].inserted_at.slice(5, 10)
           this.todoTasks[i].inserted_at = fixedDate;
         }
+      },
+    updateTasks() {
+        this.$store.commit('updateTodosArr', this.todoTasks);
       },
     deleteTask(id, index) {
         fetch("http://localhost:4000/api/todos/" + `${id}`, {

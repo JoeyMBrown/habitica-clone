@@ -5,7 +5,7 @@
         <li class="list"><router-link to="/Habits" class="router-link" @click="$emit('habits')"><i class="tiny material-icons">sync</i>Habits</router-link></li>
         <li class="list"><router-link to="/Dailies" class="router-link"><i class="tiny material-icons">date_range</i>Dailies</router-link></li>
         <li class="list"><router-link to="/CompletedTasks" class="router-link"><i class="tiny material-icons">thumb_up</i>Completed</router-link></li>
-        <li class="list"><router-link to ="#" class="router-link"><i class="tiny material-icons">menu</i>Menu</router-link></li>
+        <li class="list"><router-link to ="/Login" class="router-link"><i class="tiny material-icons">menu</i>Menu</router-link></li>
     </ul>
 </div>
 </template>
