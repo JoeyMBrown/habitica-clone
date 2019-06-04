@@ -3,7 +3,7 @@
     <div class="nav-wrapper">
       <a href="#" id="show-modal" class="right" @click="$emit('showModalHandler')"><i class="large material-icons">add</i></a>
       <a href="#" class="center">Habitica-Clone</a>
-      <a href="#" id="nav-filter" class="left"><router-link to="/Dailies">Filter</router-link></a>
+      <a href="#" id="nav-filter" class="left"><router-link to="/Signup">Filter</router-link></a>
     </div>
   </nav>
 </template>

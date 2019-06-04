@@ -86,7 +86,7 @@ export default {
       }
     },
   created(){
-    fetch("http://localhost:4000/api/player/5")
+    fetch("http://localhost:4000/api/player/1")
         .then(response => {return response.json()}) // parses JSON response into native Javascript objects 
         .then(res => {this.playerArr[0] = res.data, console.log(this.playerArr[0].gold); this.updatePlayer();})
         .catch(error => {let name = prompt("Please create a name for your character!", "Joe"); this.createPlayer(name);});
@@ -119,7 +119,7 @@ export default {
               'Content-Type': 'application/json'
             }
           }).then(res => res.json())
-          .then(response => this.playerArr[0] = response, updatePlayer())
+          .then(response => this.playerArr[0] = response, this.updatePlayer())
           .catch(error => console.error('Error:', error));
             },
           updatePlayer() {

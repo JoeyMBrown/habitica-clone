@@ -55,6 +55,8 @@ import Footer from "./components/Footer";
 import Player from "./components/Player";
 import DynamicHeader from "./components/DynamicHeader";
 import DynamicFooter from "./components/DynamicFooter";
+import Signup from "./components/Signup";
+import Login from "./components/Login";
 import Modal from "./components/Modal";
 import Test from "./components/Test";
 import VueRouter from 'vue-router';
