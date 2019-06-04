@@ -5,7 +5,7 @@
         <ul>
           <li
             :key="i"
-            v-for="(task, i) in habitTasks"
+            v-for="(task, i) in habits"
             @click="handleClickForItem(task, i);" v-bind:id="i" :class="`${task.difficulty} z-depth-2`"
           >
             <!-- TASK INFO  - ${task.finishedTimes} -->
@@ -31,6 +31,11 @@ export default {
       habitTasks: []
     }
   },
+  computed: {
+    habits() {
+      return this.$store.state.tasks.habits;
+    }
+  },
   created: function(){
     this.getTasks('http://localhost:4000/api/habits/')
   },
@@ -38,7 +43,7 @@ export default {
       getTasks(url) {
     fetch(url)
       .then(response => {return response.json()}) // parses JSON response into native Javascript objects 
-      .then(res => {this.habitTasks = res.data.reverse(), this.getDates() })
+      .then(res => {this.habitTasks = res.data.reverse(), this.getDates(), this.updateTasks() })
     },
     getDates(){
       for(var i = 0; i < this.habitTasks.length; i++) {
@@ -46,8 +51,11 @@ export default {
         this.habitTasks[i].inserted_at = fixedDate;
       }
     },
+    updateTasks() {
+      this.$store.commit('updateHabitsArr', this.habitTasks);
+    },
     addCompletedTask(task) {
-      var data = {"completedtasks": {"completed": `${task.completed}`,"difficulty": task.difficulty,"task": `${task.task}`}};
+      var data = {"completedtasks": {"completed": true,"difficulty": task.difficulty,"task": `${task.task}`}};
       fetch("http://localhost:4000/api/completedtasks", {
         method: 'POST',
         body: JSON.stringify(data), // data can be `string` or {object}!

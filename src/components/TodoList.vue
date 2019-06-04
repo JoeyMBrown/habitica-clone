@@ -62,7 +62,7 @@ export default {
           console.log("index to delete: " + index);
     },
     addCompletedTask(task) {
-            var data = {"completedtasks": {"completed": `${task.completed}`,"difficulty": task.difficulty,"task": `${task.task}`}};
+            var data = {"completedtasks": {"completed": true,"difficulty": task.difficulty,"task": `${task.task}`}};
         fetch("http://localhost:4000/api/completedtasks", {
             method: 'POST',
             body: JSON.stringify(data), // data can be `string` or {object}!

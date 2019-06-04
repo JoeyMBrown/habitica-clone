@@ -48,7 +48,9 @@ const store = new Vuex.Store({
     },
     tasks: {
       playerArr: [],
-      todos: []
+      todos: [],
+      habits: [],
+      dailies: []
     },
     display: {
       taskList: ""
@@ -108,6 +110,12 @@ const store = new Vuex.Store({
       },
       addTodoTask (state, task) {
         state.tasks.todos.unshift(task);
+      },
+      updateHabitsArr (state, habitsArr) {
+        state.tasks.habits = habitsArr;
+      },
+      addHabitTask (state, task) {
+        state.tasks.habits.unshift(task);
       },
       displayModal(state, boolean) {
         state.showModal.boolean = boolean;

@@ -119,6 +119,11 @@ export default {
           .then(response => console.log('Success:', JSON.stringify(response)))
           .catch(error => console.error('Error:', error));
 
+          var task = this.getDate(data.habittasks);
+
+          this.$store.commit('addHabitTask', task);
+
+
       } else if(taskSelect.value === "Todo") {
         var data = {
           "todotasks": {"task":`${this.fields.textBoxValue}`,"difficulty":`${taskDifficulty.value}`,"completed":false}
