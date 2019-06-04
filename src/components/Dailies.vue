@@ -5,7 +5,7 @@
         <ul>
           <li
             :key="i"
-            v-for="(task, i) in dailyTasks"
+            v-for="(task, i) in dailies"
             @click="handleClickForItem(task, i);" v-bind:id="i" :class="`${task.difficulty} z-depth-2`"
           >
           <!-- TASK INFO -->
@@ -34,17 +34,25 @@ export default {
   created: function(){
     this.getTasks('http://localhost:4000/api/dailies/')
   },
+  computed: {
+    dailies() {
+      return this.$store.state.tasks.dailies;
+    }
+  },
   methods: {
     getTasks(url) {
       fetch(url)
         .then(response => {return response.json()}) // parses JSON response into native Javascript objects 
-        .then(res => {this.dailyTasks = res.data.reverse(), this.getDates() })
+        .then(res => {this.dailyTasks = res.data.reverse(), this.getDates(), this.updateTasks() })
       },
     getDates(){
       for(var i = 0; i < this.dailyTasks.length; i++) {
         var fixedDate = this.dailyTasks[i].inserted_at.slice(5, 10)
         this.dailyTasks[i].inserted_at = fixedDate;
       }
+    },
+    updateTasks() {
+      this.$store.commit('updateDailiesArr', this.dailyTasks);
     },
     addCompletedTask(task) {
       var data = {"completedtasks": {"completed": true,"difficulty": task.difficulty,"task": `${task.task}`}};

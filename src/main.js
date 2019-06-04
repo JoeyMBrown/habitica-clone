@@ -117,6 +117,12 @@ const store = new Vuex.Store({
       addHabitTask (state, task) {
         state.tasks.habits.unshift(task);
       },
+      updateDailiesArr (state, dailiesArr) {
+        state.tasks.dailies = dailiesArr;
+      },
+      addDailyTask (state, task) {
+        state.tasks.dailies.unshift(task);
+      },
       displayModal(state, boolean) {
         state.showModal.boolean = boolean;
       },

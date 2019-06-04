@@ -155,6 +155,10 @@ export default {
           }).then(res => res.json())
           .then(response => console.log('Success:', JSON.stringify(response)))
           .catch(error => console.error('Error:', error));
+
+          var task = this.getDate(data.dailytasks);
+
+          this.$store.commit('addDailyTask', task);
       }
       this.fields.textBoxValue = "";
     }
