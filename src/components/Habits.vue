@@ -9,7 +9,7 @@
             @click="handleClickForItem(task, i);" v-bind:id="i" :class="`${task.difficulty} z-depth-2`"
           >
             <!-- TASK INFO  - ${task.finishedTimes} -->
-            {{`${task.task} - ${task.difficulty} - ${task.inserted_at}`}}  <sub>13</sub>
+            {{`${task.task} - ${task.difficulty} - ${task.inserted_at}`}}  <!--<sub>13</sub>-->
 
           </li>
         </ul>
@@ -27,7 +27,6 @@ export default {
   },
   data() {
     return {
-      //Objects connected to: finished, finishedTimes, difficulty
       habitTasks: []
     }
   },
@@ -58,7 +57,7 @@ export default {
       var data = {"completedtasks": {"completed": true,"difficulty": task.difficulty,"task": `${task.task}`}};
       fetch("http://localhost:4000/api/completedtasks", {
         method: 'POST',
-        body: JSON.stringify(data), // data can be `string` or {object}!
+        body: JSON.stringify(data),
         headers:{
           'Content-Type': 'application/json'
         }
@@ -66,25 +65,11 @@ export default {
       .then(response => console.log('Success:', JSON.stringify(response)))
       .catch(error => console.error('Error:', error));
     },
-    // When called:
-    //1. item at index is removed. (1) specifies how many indexes to remove.
-    deleteTask(i){
-      this.$store.state.tasks.habits.splice(i, 1);
-    },
-    reorderTask(){
-      var x = this.$store.state.tasks.habits.shift();
-      this.$store.state.tasks.habits.push(x);
-    },
-    sortDate() {
-      this.$store.state.tasks.habits.reverse();
-    },
-
     //When <li> is clicked:
     //1. ++ to times finished in task object
     //2. Run finishTask which unshifts a task to completedTasks array
     //3. Reward based on difficulty
     handleClickForItem(task, i) {
-        //task.finishedTimes++;
         this.addCompletedTask(task);
         this.handleEXP(task);
     },

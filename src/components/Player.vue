@@ -93,7 +93,6 @@ export default {
   },
   watch: {
     playerArr: function () {
-      console.log(this.playerArr[0]);
       this.updatePlayer();
     }
   },

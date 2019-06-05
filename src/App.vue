@@ -93,7 +93,6 @@ export default {
       this.$store.commit('display', "Habits");
     },
     getDate(task){
-
         var d = new Date();
         var day = d.getDate();
         var month = d.getMonth() + 1;

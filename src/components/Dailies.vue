@@ -27,7 +27,6 @@ export default {
   },
   data() {
     return {
-      //Objects connected to: finished, finishedTimes, difficulty
       dailyTasks: []
     }
   },
@@ -58,25 +57,13 @@ export default {
       var data = {"completedtasks": {"completed": true,"difficulty": task.difficulty,"task": `${task.task}`}};
       fetch("http://localhost:4000/api/completedtasks", {
         method: 'POST',
-        body: JSON.stringify(data), // data can be `string` or {object}!
+        body: JSON.stringify(data),
         headers:{
           'Content-Type': 'application/json'
         }
       }).then(res => res.json())
       .then(response => console.log('Success:', JSON.stringify(response)))
       .catch(error => console.error('Error:', error));
-    },
-    deleteTask(i){
-        this.dailyTasks.splice(i, 1);
-    },
-    reorderTask(){
-        var x = this.repeatTasks.shift();
-        this.repeatTasks.push(x);
-        this.saveRepeatTasks();
-},
- //May work, check for optimization
-    sortDate() {
-      this.repeatTasks.reverse();
     },
     //Needs optimized
     handleClickForItem(task, i) {
@@ -105,27 +92,10 @@ export default {
     }
   }
 };
-
-function createTaskFromValues(name) {
-  const now = new Date();
-
-  return {
-    name,
-    created: `${now.getMonth() + 1}/${now.getDate()}/${now.getFullYear()}`,
-    finishedTimes: 0,
-    difficulty: "notSet"
-  };
-}
 </script>
 
 
 <style scoped>
-.form-container {
-  display: flex;
-}
-.task-form {
-  flex-grow: 1;
-}
 .task-list-container{
   display: flex;
   justify-content: center;
@@ -147,12 +117,6 @@ function createTaskFromValues(name) {
   padding-left: 7px;
   margin: 10px;
 }
-.notSet {
-  padding: 20px;
-  font-size: 20px;
-  background-color: #607d8b;
-
-}
 .easy {
   padding: 20px;
   font-size: 20px;
@@ -167,8 +131,5 @@ function createTaskFromValues(name) {
   padding: 20px;
   font-size: 20px;
   background-color: #d50000;
-}
-.difficultyButtons {
-  margin: 0px 10px 0px 0px;
 }
 </style>

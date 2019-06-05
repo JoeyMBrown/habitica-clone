@@ -19,7 +19,7 @@ export default {
 <style>
 #footer {
     width: 100%;
-    border: 1px solid black;
+    border-top: 1px solid black;
     overflow: hidden;
     position: fixed;
     bottom: 0;

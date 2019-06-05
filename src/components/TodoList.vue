@@ -65,7 +65,7 @@ export default {
             var data = {"completedtasks": {"completed": true,"difficulty": task.difficulty,"task": `${task.task}`}};
         fetch("http://localhost:4000/api/completedtasks", {
             method: 'POST',
-            body: JSON.stringify(data), // data can be `string` or {object}!
+            body: JSON.stringify(data),
             headers:{
               'Content-Type': 'application/json'
             }
@@ -80,10 +80,10 @@ export default {
     //4. Delete task
     handleClickForItem(task, i) {
         task.finished = true;
-        //this.$store.commit('finishtoDos', i);
         this.handleEXP(task);
         this.deleteTask(task.id, this.findTaskIndex(task, this.todoTasks));
         this.addCompletedTask(task);
+        //M.toast({html: 'Task Completed!', classes: 'mobileScreen'});
     },
     findTaskIndex(task, array) {
       var taskIndex;
@@ -115,17 +115,7 @@ export default {
           });
       }
       this.$store.commit('levelUp');
-    },
-    toDos() {
-      return this.$store.state.tasks.toDos;
-    },
-    reorderTask() {
-      var x = this.$store.state.tasks.toDos.shift();
-      this.$store.state.tasks.toDos.push(x);
-    },
-    sortDate() {
-      this.$store.state.tasks.toDos.reverse();
-    },
+    }
   }
 };
 </script>
