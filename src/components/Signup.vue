@@ -26,7 +26,7 @@ export default {
                 var data = {
                 "user": {"email":`${this.fields.email}`,"password":`${this.fields.password}`}
                 }
-                fetch("http://localhost:4000/api/users/sign_up", {
+                fetch(`${window.config.apiBase}users/sign_up`, {
                     method: 'POST',
                     body: JSON.stringify(data), // data can be `string` or {object}!
                     headers:{

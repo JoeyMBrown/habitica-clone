@@ -31,7 +31,7 @@ export default {
     }
   },
   created: function(){
-    this.getTasks('http://localhost:4000/api/dailies/')
+    this.getTasks(`${window.config.apiBase}dailies/`)
   },
   computed: {
     dailies() {
@@ -55,7 +55,7 @@ export default {
     },
     addCompletedTask(task) {
       var data = {"completedtasks": {"completed": true,"difficulty": task.difficulty,"task": `${task.task}`}};
-      fetch("http://localhost:4000/api/completedtasks", {
+      fetch(`${window.config.apiBase}completedtasks`, {
         method: 'POST',
         body: JSON.stringify(data),
         headers:{

@@ -37,7 +37,7 @@ export default {
     }
   },
   created: function(){
-    this.getTasks('http://localhost:4000/api/todos/')
+    this.getTasks(`${window.config.apiBase}todos/`)
   },
   methods: {
     getTasks(url) {
@@ -55,7 +55,7 @@ export default {
         this.$store.commit('updateTodosArr', this.todoTasks);
       },
     deleteTask(id, index) {
-        fetch("http://localhost:4000/api/todos/" + `${id}`, {
+        fetch(`${window.config.apiBase}todos/${id}`, {
             method: 'DELETE',
         });
           this.todoTasks.splice(index, 1);
@@ -63,7 +63,7 @@ export default {
     },
     addCompletedTask(task) {
             var data = {"completedtasks": {"completed": true,"difficulty": task.difficulty,"task": `${task.task}`}};
-        fetch("http://localhost:4000/api/completedtasks", {
+        fetch(`${window.config.apiBase}completedtasks`, {
             method: 'POST',
             body: JSON.stringify(data),
             headers:{
@@ -83,6 +83,7 @@ export default {
         this.handleEXP(task);
         this.deleteTask(task.id, this.findTaskIndex(task, this.todoTasks));
         this.addCompletedTask(task);
+        console.log(task.id);
         //M.toast({html: 'Task Completed!', classes: 'mobileScreen'});
     },
     findTaskIndex(task, array) {
@@ -90,6 +91,7 @@ export default {
       var index = array.forEach( function (value, index, array) {
         if (value.id === task.id) {
           taskIndex = index;
+          console.log(index);
         return index;
         } else {
           console.log("yo");

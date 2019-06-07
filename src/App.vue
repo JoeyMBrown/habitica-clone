@@ -108,7 +108,7 @@ export default {
         var data = {
           "habittasks": {"task":`${this.fields.textBoxValue}`,"difficulty":`${taskDifficulty.value}`,"completed":false}
         }
-          fetch("http://localhost:4000/api/habits/", {
+          fetch(`${window.config.apiBase}habits/`, {
             method: 'POST',
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers:{
@@ -127,7 +127,7 @@ export default {
         var data = {
           "todotasks": {"task":`${this.fields.textBoxValue}`,"difficulty":`${taskDifficulty.value}`,"completed":false}
         }
-          fetch("http://localhost:4000/api/todos/", {
+          fetch(`${window.config.apiBase}todos/`, {
             method: 'POST',
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers:{
@@ -145,7 +145,7 @@ export default {
         var data = {
           "dailytasks": {"task":`${this.fields.textBoxValue}`,"difficulty":`${taskDifficulty.value}`,"completed":false}
         }
-          fetch("http://localhost:4000/api/dailies/", {
+          fetch(`${window.config.apiBase}dailies/`, {
             method: 'POST',
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers:{

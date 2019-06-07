@@ -83,7 +83,7 @@ const store = new Vuex.Store({
 
           var data = { "player": state.tasks.playerArr[0] } 
 
-          fetch("http://localhost:4000/api/player/1", {
+          fetch(`${window.config.apiBase}player/1`, {
             method: 'PUT',
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers:{

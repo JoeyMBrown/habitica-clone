@@ -31,7 +31,7 @@ export default {
     }
   },
   created: function(){
-    this.getTasks('http://localhost:4000/api/completedtasks/');
+    this.getTasks(`${window.config.apiBase}completedtasks/`);
   },
     methods: {
       getTasks(url) {

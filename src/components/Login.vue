@@ -25,7 +25,7 @@ export default {
             if (this.fields.email !== "" && this.fields.password !== "") {
                 var data = {"email":`${this.fields.email}`,"password":`${this.fields.password}`}
 
-                fetch("http://localhost:4000/api/users/sign_in", {
+                fetch(`${window.config.apiBase}users/sign_in`, {
                     method: 'POST',
                     body: JSON.stringify(data), // data can be `string` or {object}!
                     headers:{

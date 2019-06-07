@@ -86,7 +86,7 @@ export default {
       }
     },
   created(){
-    fetch("http://localhost:4000/api/player/1")
+    fetch(`${window.config.apiBase}player/1`)
         .then(response => {return response.json()}) // parses JSON response into native Javascript objects 
         .then(res => {this.playerArr[0] = res.data, console.log(this.playerArr[0].gold); this.updatePlayer();})
         .catch(error => {let name = prompt("Please create a name for your character!", "Joe"); this.createPlayer(name);});
@@ -111,7 +111,7 @@ export default {
                 gold: 100,
                 }
         }
-          fetch("http://localhost:4000/api/player/", {
+          fetch(`${window.config.apiBase}player/`, {
             method: 'POST',
             body: JSON.stringify(data), // data can be `string` or {object}!
             headers:{
