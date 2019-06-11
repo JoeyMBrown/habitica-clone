@@ -1,12 +1,20 @@
 <template>
 <div id="footer">
-    <ul>
-        <li class="list"><router-link to="/TodoList" class="router-link"><i class="tiny material-icons">check_circle</i>To-Do's</router-link></li>
-        <li class="list"><router-link to="/Habits" class="router-link" @click="$emit('habits')"><i class="tiny material-icons">sync</i>Habits</router-link></li>
-        <li class="list"><router-link to="/Dailies" class="router-link"><i class="tiny material-icons">date_range</i>Dailies</router-link></li>
-        <li class="list"><router-link to="/CompletedTasks" class="router-link"><i class="tiny material-icons">thumb_up</i>Completed</router-link></li>
-        <li class="list"><router-link to ="/Login" class="router-link"><i class="tiny material-icons">menu</i>Menu</router-link></li>
-    </ul>
+    <div id="listContainer">
+        <ul>
+            <li class="listIcons"><router-link to="/TodoList" class="router-link"><i class="small material-icons">check_circle</i></router-link></li>
+            <li class="listIcons"><router-link to="/Habits" class="router-link"><i class="small material-icons">sync</i></router-link></li>
+            <li class="listIcons"><router-link to="/Dailies" class="router-link"><i class="small material-icons">date_range</i></router-link></li>
+            <li class="listIcons"><router-link to="/CompletedTasks" class="router-link"><i class="small material-icons">thumb_up</i></router-link></li>
+            <li class="listIcons"><router-link to ="/Login" class="router-link"><i class="small material-icons">menu</i></router-link></li>
+            <br />
+            <li class="list"><router-link to="/TodoList" class="router-link">To-Do's</router-link></li>
+            <li class="list"><router-link to="/Habits" class="router-link" @click="$emit('habits')">Habits</router-link></li>
+            <li class="list"><router-link to="/Dailies" class="router-link">Dailies</router-link></li>
+            <li class="list"><router-link to="/CompletedTasks" class="router-link">Completed</router-link></li>
+            <li class="list"><router-link to ="/Login" class="router-link">Menu</router-link></li>
+        </ul>
+    </div>
 </div>
 </template>
 
@@ -23,16 +31,30 @@ export default {
     overflow: hidden;
     position: fixed;
     bottom: 0;
-    width: 100%;
     z-index: 2;
     background-color: whitesmoke;
 }
+#listContainer {
+    display: flex;
+    justify-content: space-evenly;
+}
 .list {
-    display: inline;
-    text-decoration: none;
-    padding: 10px;
+    display: inline-block;
+    padding: 0px;
+    width: 70px;
+}
+.listIcons {
+    display: inline-block;
+    padding: 0px 20px 0px 20px;
 }
 .router-link {
     color: black;
 }
+.router-link-exact-active {
+    color: #ee6e73;
+}
+.pink {
+    color: #ee6e73;
+}
+
 </style>
