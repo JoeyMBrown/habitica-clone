@@ -49,6 +49,14 @@
         </form>
       </div>
     </Modal>
+
+    <!-- LOGIN -->
+    <div
+      v-if="!isAuthenticated"
+      style="height: 100vh; width: 100vw; overflow: hidden; background-color: dodgerblue; z-index: 9999; position: fixed; top: 0; left: 0;"
+    >
+      <button @click.prevent="isAuthenticated = true;">AUTH</button>
+    </div>
   </div>
 </template>
 
@@ -84,7 +92,8 @@ export default {
     return {
       fields: {
         textBoxValue: ""
-      }
+      },
+      isAuthenticated: false
     };
   },
   computed: {

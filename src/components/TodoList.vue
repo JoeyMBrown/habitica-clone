@@ -136,16 +136,6 @@ export default {
 
 
 <style scoped>
-.easy {
-  background-color: #81c784;
-}
-.medium {
-  background-color: #dce775;
-}
-.hard {
-  background-color: #d50000;
-}
-
 
 li {
   font-size: 20px;

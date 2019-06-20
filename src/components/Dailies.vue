@@ -1,21 +1,30 @@
 <template>
-  <div>
-    <section class="task-list-container row">
-      <div class="task-list z-depth-2 col s12">
-        <ul>
-          <li
-            :key="i"
-            v-for="(task, i) in dailies"
-            @click="handleClickForItem(task, i);" v-bind:id="i" :class="`${task.difficulty} z-depth-2`"
-          >
-          <!-- TASK INFO -->
-            {{  `${task.task} - ${task.difficulty} - ${task.inserted_at}`}} <!--<sub>13</sub>-->
+  <ul style="display: flex; flex-direction: column; margin: 0; min-height: 100vh;">
+    <li
+      :key="i"
+      :id="i"
+      v-for="(task, i) in dailies"
+      :class="['task-container', `task--${task.difficulty}`]"
+    >
 
-          </li>
-        </ul>
+      <div class="task-button" @click="handleClickForItem(task, i);">
+        <div class="button-circle">
+          +
+        </div>
       </div>
-    </section>
-  </div>
+
+      <!-- TASK INFO -->
+      <div class="task-summary">
+        {{  `${task.task} - ${task.inserted_at}`}}
+      </div>
+
+      <div class="task-button">
+        <div class="button-circle">
+          -
+        </div>
+      </div>
+    </li>
+  </ul>
 </template>
 
 
@@ -70,6 +79,11 @@ export default {
         //task.finishedTimes++;
         this.addCompletedTask(task);
         this.handleEXP(task);
+
+        this.$store.dispatch('addNotification', {
+          id: Math.random(),
+          message: '💰 100'
+        })
     },
     handleEXP(task) {
       if (task.difficulty === "easy") {
@@ -96,40 +110,55 @@ export default {
 
 
 <style scoped>
-.task-list-container{
+li {
+  font-size: 20px;
   display: flex;
+}
+
+/* */
+.task-button {
+  color: #fff;
+  text-align: center;
+  font-weight: 300;
+  width: 75px;
+  /* center */
   justify-content: center;
-  padding: 10px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, .3);
+  border-right: 1px solid rgba(0, 0, 0, .3);
+  border-left: 1px solid rgba(0, 0, 0, .3);
 }
-.task-list {
-  width: 50%;
-  background-color: #cfd8dc;
-  border-radius: 15px;
-  overflow-y: auto;
-  height: 464px;
+
+.button-circle {
+  width: 35px;
+  height: 35px;
+  border-radius: 100%;
+  background-color: rgba(0,0,0,.2);
+  font-size: 33px;
+  /* center */
+  line-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
-.task-list ul {
-  list-style: none;
-  padding-left: 0;
+
+.task-summary {
+  flex-grow: 1;
+  padding: 16px;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(0, 0, 0, .3);
 }
-.task-list li {
-  padding: 20px;
-  padding-left: 7px;
-  margin: 10px;
+
+.task--easy .task-button {
+  background-color: rgba(41, 206, 115, 1);
 }
-.easy {
-  padding: 20px;
-  font-size: 20px;
-  background-color: #81c784;
+
+.task--medium .task-button {
+  background-color: rgba(30, 204, 184, 1);
 }
-.medium {
-  padding: 20px;
-  font-size: 20px;
-  background-color: #dce775;
-}
-.hard {
-  padding: 20px;
-  font-size: 20px;
-  background-color: #d50000;
+
+.task--hard .task-button {
+  background-color: rgba(31, 173, 209, 1);
 }
 </style>
