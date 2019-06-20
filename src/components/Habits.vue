@@ -81,31 +81,9 @@ export default {
     //3. Reward based on difficulty
     handleClickForItem(task, i) {
         this.addCompletedTask(task);
-        this.handleEXP(task);
-
-        this.$store.dispatch('addNotification', {
-          id: Math.random(),
-          message: '💰 100'
+        this.$store.dispatch('handleTaskCompletion', {
+          task
         })
-    },
-    handleEXP(task) {
-      if (task.difficulty === "easy") {
-        this.$store.commit('easyReward', {
-          gold: 20,
-          exp: 10
-          });
-      } else if (task.difficulty === "medium") {
-        this.$store.commit('mediumReward', {
-          gold: 30,
-          exp: 20
-          });
-      } else if (task.difficulty === "hard") {
-        this.$store.commit('hardReward', {
-          gold: 40,
-          exp: 30
-          });
-      }
-      this.$store.commit('levelUp');
     }
   }
 };

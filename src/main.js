@@ -61,6 +61,41 @@ const store = new Vuex.Store({
     addNotification({commit}, notification) {
       commit('addNotification', notification);
       setTimeout(() => commit('removeNotification'), 3000);
+    },
+    /**
+     * 
+     * @param {*} param0 
+     * @param {*} task
+     * @param {string} task.task.difficulty - easy, medium, or hard
+     */
+    handleTaskCompletion({commit}, task) {
+      const { difficulty } = task.task;
+      console.log("THIS IS THE TASK: " + JSON.stringify(task));
+      console.log(task.task.difficulty);
+
+      // Default, easy reward
+      let gold = 20,
+        exp = 10;
+
+      if(difficulty === 'medium') {
+        gold = 40;
+        exp = 20;
+      }else if(difficulty === 'hard'){
+        gold = 60;
+        exp = 40;
+      }
+
+      commit('addReward', {
+        gold,
+        exp
+      })
+
+      commit('levelUp');
+
+      store.dispatch('addNotification', {
+        id: Math.random(),
+        message: `+ ${gold} 💰 + ${exp} ✨`
+      })
     }
   },
     mutations: {
@@ -109,15 +144,7 @@ const store = new Vuex.Store({
             .then(res => console.log(res))
           .catch(error => console.error('Error:', error));
       },
-      easyReward (state, payload) {
-        state.player.gold += payload.gold;
-        state.player.exp += payload.exp;
-      },
-      mediumReward (state, payload) {
-        state.player.gold += payload.gold;
-        state.player.exp += payload.exp;
-      },
-      hardReward (state, payload) {
+      addReward (state, payload) {
         state.player.gold += payload.gold;
         state.player.exp += payload.exp;
       },
