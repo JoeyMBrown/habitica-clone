@@ -78,7 +78,6 @@ export default {
     handleClickForItem(task, i) {
         //task.finishedTimes++;
         this.addCompletedTask(task);
-
         this.$store.dispatch('handleTaskCompletion', {
           task
         })

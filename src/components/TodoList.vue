@@ -88,15 +88,13 @@ export default {
     //4. Delete task
     handleClickForItem(task, i) {
         task.finished = true;
-        this.handleEXP(task);
+        //this.handleEXP(task);
         // this.deleteTask(task.id, this.findTaskIndex(task, this.todoTasks));
-        // this.addCompletedTask(task);
+        this.addCompletedTask(task);
 
-        this.$store.dispatch('addNotification', {
-          id: Math.random(),
-          message: '💰 100'
+        this.$store.dispatch('handleTaskCompletion', {
+          task
         })
-        //M.toast({html: 'Task Completed!', classes: 'mobileScreen'});
     },
     findTaskIndex(task, array) {
       var taskIndex;
@@ -110,25 +108,6 @@ export default {
         }
       });
       return taskIndex;
-    },
-    handleEXP(task) {
-      if (task.difficulty === "easy") {
-        this.$store.commit('easyReward', {
-          gold: 20,
-          exp: 10
-          });
-      } else if (task.difficulty === "medium") {
-        this.$store.commit('mediumReward', {
-          gold: 30,
-          exp: 20
-          });
-      } else if (task.difficulty === "hard") {
-        this.$store.commit('hardReward', {
-          gold: 40,
-          exp: 30
-          });
-      }
-      this.$store.commit('levelUp');
     }
   }
 };
