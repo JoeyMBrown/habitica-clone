@@ -1,23 +1,19 @@
 <template>
-  <div>
-
-    <section class="task-list-container row">
-      <div class="task-list z-depth-2 col s12">
-        <ul>
-          <li
-            :key="i"
-            v-for="(task, i) in todos"
-            @click="handleClickForItem(task, i);" v-bind:id="i" :class="`${task.difficulty} z-depth-2`">
-            <div class="finishArea">[Hi]</div>
-            <!-- TASK INFO -->
-            <div class="taskInfo">
-            {{ `${task.task} - ${task.difficulty} - ${task.inserted_at}` }}
-            </div>
-          </li>
-        </ul>
+  <ul style="display: flex; flex-direction: column; margin: 0; min-height: 100vh;">
+    <li
+      :key="i"
+      :id="i"
+      v-for="(task, i) in todos"
+      @click="handleClickForItem(task, i);" 
+      :class="`${task.difficulty} z-depth-2`"
+    >
+      <div class="finishArea">[Hi]</div>
+      <!-- TASK INFO -->
+      <div class="taskInfo">
+        {{ `${task.task} - ${task.difficulty} - ${task.inserted_at}` }}
       </div>
-    </section>
-  </div>
+    </li>
+  </ul>
 </template>
 
 
@@ -126,36 +122,18 @@ export default {
 
 
 <style scoped>
-.task-list-container {
-  display: flex;
-  justify-content: center;
-  padding: 10px;
-}
-.task-list {
-  width: 50%;
-  background-color: #cfd8dc;
-  border-radius: 15px;
-  overflow-y: auto;
-  height: 464px;
-}
-.task-list ul {
-  list-style: none;
-  padding-left: 0;
-}
-.task-list li {
-  margin: 0px;
+
+li {
+  font-size: 20px;
   display: flex;
 }
 .easy {
-  font-size: 20px;
   background-color: #81c784;
 }
 .medium {
-  font-size: 20px;
   background-color: #dce775;
 }
 .hard {
-  font-size: 20px;
   background-color: #d50000;
 }
 .finishArea {

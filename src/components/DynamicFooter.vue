@@ -1,21 +1,40 @@
 <template>
-<div id="footer">
-    <div id="listContainer">
-        <ul id="unorderedList">
-            <li class="listIcons"><router-link to="/TodoList" class="router-link"><i class="small material-icons">check_circle</i></router-link></li>
-            <li class="listIcons"><router-link to="/Habits" class="router-link"><i class="small material-icons">sync</i></router-link></li>
-            <li class="listIcons"><router-link to="/Dailies" class="router-link"><i class="small material-icons">date_range</i></router-link></li>
-            <li class="listIcons"><router-link to="/CompletedTasks" class="router-link"><i class="small material-icons">thumb_up</i></router-link></li>
-            <li class="listIcons"><router-link to ="/Login" class="router-link"><i class="small material-icons">menu</i></router-link></li>
-            <br />
-            <li class="list"><router-link to="/TodoList" class="router-link">To-Do's</router-link></li>
-            <li class="list"><router-link to="/Habits" class="router-link" @click="$emit('habits')">Habits</router-link></li>
-            <li class="list"><router-link to="/Dailies" class="router-link">Dailies</router-link></li>
-            <li class="list"><router-link to="/CompletedTasks" class="router-link">Completed</router-link></li>
-            <li class="list"><router-link to ="/Login" class="router-link">Menu</router-link></li>
+    <section>
+        <ul>
+            <li>
+                <router-link to="/Habits">
+                    <div>
+                        <i class="material-icons">sync</i>
+                    </div>
+                    <div>Habits</div>
+                </router-link>
+            </li>
+            <li>
+                <router-link to="/Dailies">
+                    <div>
+                        <i class="material-icons">date_range</i>
+                    </div>
+                    <div>Dailies</div>
+                </router-link>
+            </li>
+            <li>
+                <router-link to="/TodoList">
+                    <div>
+                        <i class="material-icons">check_circle</i>
+                    </div>
+                    <div>To-Dos</div>
+                </router-link>
+            </li>
+            <li>
+                <router-link to="/NOMANDSLAND">
+                    <div>
+                        <i class="material-icons">???</i>
+                    </div>
+                    <div>Rewards</div>
+                </router-link>
+            </li>
         </ul>
-    </div>
-</div>
+    </section>
 </template>
 
 <script>
@@ -24,43 +43,35 @@ export default {
 }
 </script>
 
-<style>
-#footer {
+<style scoped>
+section {
     width: 100%;
-    border-top: 1px solid black;
-    overflow: hidden;
     position: fixed;
     bottom: 0;
     z-index: 2;
-    background-color: whitesmoke;
+    background-color: #ee6e73;
 }
-#listContainer {
+ul {
     display: flex;
-    justify-content: space-evenly;
-    width: 100%;
+    flex-direction: row;
+    margin: 0;
+    padding: 8px 0 0 0;
 }
-#unorderedList {
-    width: 100%;
-    margin: 10px;
-    padding: 0px;
+li {
+    flex-grow: 1;
 }
-.list {
-    display: inline-block;
-    padding: 0px;
-    width: 78px;
+
+
+a,
+a:visited,
+a:active {
+    display: flex;
+    flex-direction: column;
+    color: #e8a9ab;
 }
-.listIcons {
-    display: inline-block;
-    padding: 0px 25px 0px 25px;
-}
-.router-link {
-    color: black;
-}
-.router-link-exact-active {
-    color: #ee6e73;
-}
-.pink {
-    color: #ee6e73;
+
+a.router-link-exact-active {
+    color: #fff;;
 }
 
 </style>
