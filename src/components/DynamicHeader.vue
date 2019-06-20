@@ -1,9 +1,21 @@
 <template>  
   <nav  id="fixed">
-    <div class="nav-wrapper">
-      <a href="#" id="show-modal" class="right" @click="$emit('showModalHandler')"><i class="large material-icons">add</i></a>
-      <a href="#" class="center">Habitica-Clone</a>
-      <a href="#" id="nav-filter" class="left"><router-link to="/Signup">Filter</router-link></a>
+    <!-- FILTER -->
+    <div class="nav-wrapper" style="display: flex;">
+      <div id="nav-filter">
+        <router-link to="/Signup">Filter</router-link>
+      </div>
+
+      <!-- LOGO TEXT -->
+      <div style="flex-grow: 1; text-align: center;">Task RPG</div>
+
+      <!-- ADD -->
+      <div
+        id="show-modal"
+        @click="$emit('showModalHandler')"
+      >
+        <i class="large material-icons">add</i>
+      </div>
     </div>
   </nav>
 </template>

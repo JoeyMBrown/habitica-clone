@@ -4,13 +4,23 @@
       :key="i"
       :id="i"
       v-for="(task, i) in todos"
-      @click="handleClickForItem(task, i);" 
-      :class="`${task.difficulty} z-depth-2`"
+      :class="['task-container', `task--${task.difficulty}`]"
     >
-      <div class="finishArea">[Hi]</div>
+      <div class="task-button">
+        <div class="button-circle">
+          +
+        </div>
+      </div>
+
       <!-- TASK INFO -->
-      <div class="taskInfo">
-        {{ `${task.task} - ${task.difficulty} - ${task.inserted_at}` }}
+      <div class="task-summary">
+        {{ `${task.task} - ${task.inserted_at}` }}
+      </div>
+      
+      <div class="task-button">
+        <div class="button-circle">
+          -
+        </div>
       </div>
     </li>
   </ul>
@@ -122,11 +132,6 @@ export default {
 
 
 <style scoped>
-
-li {
-  font-size: 20px;
-  display: flex;
-}
 .easy {
   background-color: #81c784;
 }
@@ -136,19 +141,57 @@ li {
 .hard {
   background-color: #d50000;
 }
-.finishArea {
+
+
+li {
+  font-size: 20px;
   display: flex;
-  border: 1px solid black;
-  justify-content: center;
-  align-items: center;
-  margin: 0px;
-  padding: 20px;
 }
 
-.taskInfo {
-  border: 1px solid black;
-  width: 100%;
-  margin: 0px;
-  padding: 30px;
+/* */
+.task-button {
+  color: #fff;
+  text-align: center;
+  font-weight: 300;
+  width: 75px;
+  /* center */
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 0, 0, .3);
+  border-right: 1px solid rgba(0, 0, 0, .3);
+  border-left: 1px solid rgba(0, 0, 0, .3);
+}
+
+.button-circle {
+  width: 35px;
+  height: 35px;
+  border-radius: 100%;
+  background-color: rgba(0,0,0,.2);
+  font-size: 33px;
+  /* center */
+  line-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.task-summary {
+  flex-grow: 1;
+  padding: 16px;
+  font-size: 14px;
+  border-bottom: 1px solid rgba(0, 0, 0, .3);
+}
+
+.task--easy .task-button {
+  background-color: rgba(41, 206, 115, 1);
+}
+
+.task--medium .task-button {
+  background-color: rgba(30, 204, 184, 1);
+}
+
+.task--hard .task-button {
+  background-color: rgba(31, 173, 209, 1);
 }
 </style>

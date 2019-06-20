@@ -46,6 +46,7 @@ export default {
 <style scoped>
 section {
     width: 100%;
+    text-align: center;
     position: fixed;
     bottom: 0;
     z-index: 2;
