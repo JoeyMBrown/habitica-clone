@@ -54,9 +54,25 @@ const store = new Vuex.Store({
     },
     display: {
       taskList: ""
+    },
+    notifications: []
+  },
+  actions: {
+    addNotification({commit}, notification) {
+      commit('addNotification', notification);
+      setTimeout(() => commit('removeNotification'), 3000);
     }
   },
     mutations: {
+      addNotification(state, notifcation) {
+        state.notifications.push(notifcation);
+      },
+      removeNotification(state) {
+        state.notifications.shift();
+      },
+      //
+      //
+      //
       updatePlayerArr (state, player0) {
         state.tasks.playerArr[0] = player0;
       },

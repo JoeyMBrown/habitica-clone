@@ -6,7 +6,7 @@
       v-for="(task, i) in todos"
       :class="['task-container', `task--${task.difficulty}`]"
     >
-      <div class="task-button">
+      <div class="task-button" @click="handleClickForItem(task, i);">
         <div class="button-circle">
           +
         </div>
@@ -89,9 +89,13 @@ export default {
     handleClickForItem(task, i) {
         task.finished = true;
         this.handleEXP(task);
-        this.deleteTask(task.id, this.findTaskIndex(task, this.todoTasks));
-        this.addCompletedTask(task);
-        console.log(task.id);
+        // this.deleteTask(task.id, this.findTaskIndex(task, this.todoTasks));
+        // this.addCompletedTask(task);
+
+        this.$store.dispatch('addNotification', {
+          id: Math.random(),
+          message: '💰 100'
+        })
         //M.toast({html: 'Task Completed!', classes: 'mobileScreen'});
     },
     findTaskIndex(task, array) {

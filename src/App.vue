@@ -1,45 +1,54 @@
 <template>
   <div id="app">
-    <DynamicHeader /> 
-    <Player />
-    <Index />
-    <DynamicFooter />
+
+    <DynamicHeader @showModalHandler="showModal()" />
+      <Player />
+      <Index />
+    <DynamicFooter @habits="display()" />
+
+    <ul class="toast-container">
+      <li
+        class="toast-item"
+        :key="notification.id"
+        v-for="notification in notifications"
+      >
+        {{ notification.message }}
+      </li>
+    </ul>
+
+    <!-- MODAL -->
     <Modal v-if="checkModal()" @close="closeModal()">
-    
-    <h5 slot="header">Create a Task:</h5>
+      <h5 slot="header">Create a Task:</h5>
 
-    <!-- Task Creation is handled below -->
+      <!-- MODAL BODY -->
+      <div slot="body">
+        <form @submit.prevent="submitTask" id="createTask">
 
-    <div slot="body">
-<form @submit.prevent="submitTask" id="createTask">
+        <div class="input-field inline">
+          <input v-model="fields.textBoxValue" id="email_inline" type="text" placeholder="e.g. Water the gnomes">
+        </div>
 
-<div class="input-field inline">
-  <input v-model="fields.textBoxValue" id="email_inline" type="text" placeholder="e.g. Water the gnomes">
-</div>
+        <label for="task-select">Choose a Task Type:</label>
 
-<label for="task-select">Choose a Task Type:</label>
+        <select id="task-select">
+            <option value="">--Please choose an option--</option>
+            <option value="Todo">To-Do</option>
+            <option value="Daily">Daily</option>
+            <option value="Habit">Habit</option>
+        </select>
 
-<select id="task-select">
-    <option value="">--Please choose an option--</option>
-    <option value="Todo">To-Do</option>
-    <option value="Daily">Daily</option>
-    <option value="Habit">Habit</option>
-</select>
+        <label for="task-difficulty">Choose a Difficulty:</label>
 
-<label for="task-difficulty">Choose a Difficulty:</label>
+        <select id="task-difficulty">
+            <option value="">--Please choose an option--</option>
+            <option value="easy">Easy</option>
+            <option value="medium">Medium</option>
+            <option value="hard">Hard</option>
+        </select>
 
-<select id="task-difficulty">
-    <option value="">--Please choose an option--</option>
-    <option value="easy">Easy</option>
-    <option value="medium">Medium</option>
-    <option value="hard">Hard</option>
-</select>
-
-</form>
-</div>
-  </Modal>
-  <DynamicHeader @showModalHandler="showModal()" />
-  <DynamicFooter @habits="display()" />
+        </form>
+      </div>
+    </Modal>
   </div>
 </template>
 
@@ -78,7 +87,12 @@ export default {
       }
     };
   },
-    methods: {
+  computed: {
+    notifications() {
+      return this.$store.state.notifications;
+    }
+  },
+  methods: {
     showModal() {
       this.$store.commit('displayModal', true);
     },
@@ -188,5 +202,30 @@ export default {
   /* Materialize overrides */
   nav {
     box-shadow: none;
+  }
+
+  .toast-container {
+    width: 100%;
+    height: calc(100% - 60px);
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    display: flex;
+    flex-direction: column-reverse;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    pointer-events: none;
+  }
+
+  .toast-item {
+    color: #fff;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-align: center;
+    background-color: dodgerblue;
+    margin: 3px auto;
+    pointer-events: none;
   }
 </style>
