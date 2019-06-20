@@ -1,41 +1,71 @@
 <template>
-  <div class="col s12 m7">
-    <div class="card horizontal">
-      <div class="card-image border">
-        <img src="https://orig06.deviantart.net/ab25/f/2014/330/6/9/pixel_art_raffle_sprite_ezio_from_assassin_s_creed_by_justingamedesign-d87t8nl.png">
-      </div>
-      <div class="card-stacked">
-        <div class="card-content">
-          <ul>
-              <li>   
-                <div id="light-red" class="progress">
-                  <div id="red" class="determinate" v-bind:style="'width: ' + playerHpPercent + '%'"></div>
-                </div>
-                Health: {{ playerHp }} / {{ playerMaxhp }}
-              <br />
+  <div style="display: flex; flex-direction: column; background-color: #ee6e73;">
+    <div class="user-container">
 
+      <!-- User Avatar -->
+      <div class="user-avatar-container">
+        <img src="@/assets/example-user-avatar.png">
+      </div>
+      
+      <!-- STATUS BARS -->
+      <div style="flex-grow: 1; padding: 0px 16px;">
+        <ul class="bar-list">
+            <!-- Health -->
+            <li>   
+              <div id="light-red" class="progress">
+                <div id="red" class="determinate" v-bind:style="'width: ' + playerHpPercent + '%'"></div>
+              </div>
+              <div style="display: flex;">
+                <span style="text-align: left; flex-grow: 1;">
+                  {{ playerHp }} / {{ playerMaxhp }}
+                </span>
+                <span style="text-align: right; flex-grow: 1;">
+                  Health
+                </span>
+              </div>
+            </li>
+            <!-- Experience -->
+            <li>
               <div id="light-yellow" class="progress">
                 <div id="yellow" class="determinate" v-bind:style="'width: ' + playerExpPercent + '%'"></div>
               </div>
-                EXP: {{ playerExp }} / {{ playerExpNeeded }}
-              <br />
-
+              <div style="display: flex;">
+                <span style="text-align: left; flex-grow: 1;">
+                  {{ playerExp }} / {{ playerExpNeeded }}
+                </span>
+                <span style="text-align: right; flex-grow: 1;">
+                  Experience
+                </span>
+              </div>
+            </li>
+            <!-- Mana -->
+            <li>
               <div id="light-blue" class="progress">
                 <div id="blue" class="determinate" v-bind:style="'width: ' + playerMpPercent + '%'"></div>
               </div>
-              MP: {{ playerMp }} / {{ playerMaxmp }}</li>
-          </ul>
-        </div>
-        <div class="card-action">
-          <div>
-          <p id="playerName" class="left">{{ playerName }}</p>
-          <p id="playerGold" class="right">Gold: {{ playerGold }}</p>
-          </div>
-          <br />
-          <p id="playerLevel">Level: {{ playerLevel }}</p>
-        </div>
+              <div style="display: flex;">
+                <span style="text-align: left; flex-grow: 1;">
+                  {{ playerMp }} / {{ playerMaxmp }}
+                </span>
+                <span style="text-align: right; flex-grow: 1;">
+                  Mana
+                </span>
+              </div>
+            </li>
+        </ul>
       </div>
     </div>
+
+    <!-- SUMMARY -->
+    <div style="display: flex; color: #fff; margin: 8px 16px;">
+      <span style="text-align: left; flex-grow: 1;">
+        🗡 Lvl {{ playerLevel }} Rogue
+      </span>
+      <span style="text-align: right; flex-grow: 1;">
+        💰 {{ playerGold }}
+      </span>
+    </div>
+
   </div>
 </template>
 
@@ -160,18 +190,32 @@ background-color: #039be5;
 #light-blue {
 background-color: #b3e5fc;
 }
-#playerName {
-  display: inline;
+
+.user-container {
+  display: flex;
+  color: #fff;
 }
-#playerGold {
-  display: inline;
+
+/* USER AVATAR */
+.user-avatar-container {
+  flex-basis: 132px;
 }
-#playerLevel {
-  position: absolute;
-  top: 50%;
-  left: 20;
+
+.user-avatar-container img {
+  margin: 16px;
+  width: 100px;
+  background-color: dodgerblue;
 }
-.border {
-  border: 1px solid black;
+
+.bar-list li {
+  margin-bottom: 8px;
+}
+
+/* MATERIALIZE OVERRIDES */
+.progress {
+  height: 10px;
+  border-radius: 5px;
+  margin: 0;
+  margin-bottom: 2px;
 }
 </style>

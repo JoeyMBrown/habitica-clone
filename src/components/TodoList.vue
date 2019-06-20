@@ -7,10 +7,12 @@
           <li
             :key="i"
             v-for="(task, i) in todos"
-            @click="handleClickForItem(task, i);" v-bind:id="i" :class="`${task.difficulty} z-depth-2`"
-          >
+            @click="handleClickForItem(task, i);" v-bind:id="i" :class="`${task.difficulty} z-depth-2`">
+            <div class="finishArea">[Hi]</div>
             <!-- TASK INFO -->
+            <div class="taskInfo">
             {{ `${task.task} - ${task.difficulty} - ${task.inserted_at}` }}
+            </div>
           </li>
         </ul>
       </div>
@@ -141,23 +143,34 @@ export default {
   padding-left: 0;
 }
 .task-list li {
-  padding: 20px;
-  padding-left: 7px;
-  margin: 10px;
+  margin: 0px;
+  display: flex;
 }
 .easy {
-  padding: 20px;
   font-size: 20px;
   background-color: #81c784;
 }
 .medium {
-  padding: 20px;
   font-size: 20px;
   background-color: #dce775;
 }
 .hard {
-  padding: 20px;
   font-size: 20px;
   background-color: #d50000;
+}
+.finishArea {
+  display: flex;
+  border: 1px solid black;
+  justify-content: center;
+  align-items: center;
+  margin: 0px;
+  padding: 20px;
+}
+
+.taskInfo {
+  border: 1px solid black;
+  width: 100%;
+  margin: 0px;
+  padding: 30px;
 }
 </style>

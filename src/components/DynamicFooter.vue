@@ -1,7 +1,7 @@
 <template>
 <div id="footer">
     <div id="listContainer">
-        <ul>
+        <ul id="unorderedList">
             <li class="listIcons"><router-link to="/TodoList" class="router-link"><i class="small material-icons">check_circle</i></router-link></li>
             <li class="listIcons"><router-link to="/Habits" class="router-link"><i class="small material-icons">sync</i></router-link></li>
             <li class="listIcons"><router-link to="/Dailies" class="router-link"><i class="small material-icons">date_range</i></router-link></li>
@@ -37,15 +37,21 @@ export default {
 #listContainer {
     display: flex;
     justify-content: space-evenly;
+    width: 100%;
+}
+#unorderedList {
+    width: 100%;
+    margin: 10px;
+    padding: 0px;
 }
 .list {
     display: inline-block;
     padding: 0px;
-    width: 70px;
+    width: 78px;
 }
 .listIcons {
     display: inline-block;
-    padding: 0px 20px 0px 20px;
+    padding: 0px 25px 0px 25px;
 }
 .router-link {
     color: black;

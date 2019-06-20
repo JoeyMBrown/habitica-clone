@@ -166,24 +166,28 @@ export default {
 </script>
 
 <style>
-* {
-  box-sizing: border-box;
-}
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-html, body {
-  overflow-x: hidden;
-  background-color: #f5f5f5;
-  margin: 0;
-  margin-top: 25px;
-  margin-bottom: 25px;
-}
-select {
-  display: block;
-}
+  * {
+    box-sizing: border-box;
+  }
+  #app {
+    font-family: "Avenir", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+  }
+  html, body {
+    overflow-x: hidden;
+    background-color: #f5f5f5;
+    margin: 0;
+    margin-top: 25px;
+    margin-bottom: 25px;
+  }
+  select {
+    display: block;
+  }
+  /* Materialize overrides */
+  nav {
+    box-shadow: none;
+  }
 </style>
