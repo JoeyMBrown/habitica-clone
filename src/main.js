@@ -8,6 +8,7 @@ import Habits from "./components/Habits";
 import TodoList from "./components/TodoList";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
+import Rewards from "./components/Rewards";
 import CompletedTasks from "./components/CompletedTasks";
 import 'materialize-css';
 
@@ -19,7 +20,8 @@ const routes = [
   { path: '/TodoList', component: TodoList},
   { path: '/CompletedTasks', component: CompletedTasks},
   { path: '/Signup', component: Signup},
-  { path: '/Login', component: Login}
+  { path: '/Login', component: Login},
+  { path: '/Rewards', component: Rewards}
 ]
 
 Vue.config.productionTip = false;
@@ -53,7 +55,8 @@ const store = new Vuex.Store({
       playerArr: [],
       todos: [],
       habits: [],
-      dailies: []
+      dailies: [],
+      rewards: []
     },
     display: {
       taskList: ""
@@ -75,33 +78,49 @@ const store = new Vuex.Store({
      * @param {string} task.task.difficulty - easy, medium, or hard
      */
     handleTaskCompletion({commit}, task) {
-      const { difficulty } = task.task;
-      console.log("THIS IS THE TASK: " + JSON.stringify(task));
-      console.log(task.task.difficulty);
 
-      // Default, easy reward
-      let gold = 20,
+      if (task.task) {
+        const { difficulty } = task.task;
+        console.log("THIS IS THE TASK: " + JSON.stringify(task));
+        console.log(task.task.difficulty);
+
+        // Default, easy reward
+        let gold = 20,
         exp = 10;
 
-      if(difficulty === 'medium') {
-        gold = 40;
-        exp = 20;
-      }else if(difficulty === 'hard'){
-        gold = 60;
-        exp = 40;
+        if(difficulty === 'medium') {
+          gold = 40;
+          exp = 20;
+        }else if(difficulty === 'hard'){
+          gold = 60;
+          exp = 40;
+        }
+
+        commit('addReward', {
+          gold,
+          exp
+        })
+
+        commit('levelUp');
+
+        store.dispatch('addNotification', {
+          id: Math.random(),
+          message: `+ ${gold} 💰 + ${exp} ✨`
+        })
+
+      } else if (task.reward.name) {
+          let gold = task.reward.cost;
+          console.log("COST: " + gold);
+
+          commit('subtractReward', {
+            gold
+          })
+
+          store.dispatch('addNotification', {
+            id: Math.random(),
+            message: `- ${gold} 💰`
+          })
       }
-
-      commit('addReward', {
-        gold,
-        exp
-      })
-
-      commit('levelUp');
-
-      store.dispatch('addNotification', {
-        id: Math.random(),
-        message: `+ ${gold} 💰 + ${exp} ✨`
-      })
     }
   },
     mutations: {
@@ -157,11 +176,20 @@ const store = new Vuex.Store({
         state.player.gold += payload.gold;
         state.player.exp += payload.exp;
       },
+      subtractReward (state, payload) {
+        state.player.gold -= payload.gold;
+      },
       updateTodosArr (state, todosArr) {
         state.tasks.todos = todosArr;
       },
       addTodoTask (state, task) {
         state.tasks.todos.unshift(task);
+      },
+      addRewardTask (state, reward) {
+        state.tasks.rewards.unshift(reward);
+      },
+      updateRewardsArr (state, rewardsArr) {
+        state.tasks.rewards = rewardsArr;
       },
       updateHabitsArr (state, habitsArr) {
         state.tasks.habits = habitsArr;

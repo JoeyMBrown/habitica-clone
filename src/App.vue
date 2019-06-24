@@ -28,9 +28,16 @@
           <input v-model="fields.textBoxValue" id="email_inline" type="text" placeholder="e.g. Water the gnomes">
         </div>
 
-        <label for="task-difficulty">Choose a Difficulty:</label>
+        <label for="la">Choose a Cost:</label>
 
-        <select id="task-difficulty">
+        <div class="input-field inline">
+          <input v-if="this.$store.state.currentList.list === 'Rewards'" v-model="fields.textBoxValueCost" id="la" type="text" placeholder="100">
+        </div>
+
+
+        <label v-if="this.$store.state.currentList.list !== 'Rewards'" for="task-difficulty">Choose a Difficulty:</label>
+
+        <select v-if="this.$store.state.currentList.list !== 'Rewards'" id="task-difficulty">
             <option value="">--Please choose an option--</option>
             <option value="easy">Easy</option>
             <option value="medium">Medium</option>
@@ -67,6 +74,7 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Modal from "./components/Modal";
 import Test from "./components/Test";
+import Rewards from "./components/Rewards";
 import VueRouter from 'vue-router';
 import Vuex from 'vuex';
 
@@ -82,7 +90,8 @@ export default {
   data(){
     return {
       fields: {
-        textBoxValue: ""
+        textBoxValue: "",
+        textBoxValueCost: ""
       },
       isAuthenticated: false
     };
@@ -113,6 +122,11 @@ export default {
         return {"task": `${task.task}`,"difficulty":`${task.difficulty}`,"inserted_at":`0${month}-0${day}`};
   },
     submitTask(evt, val, val1) {
+
+    console.log("val " + val)
+    console.log("val1 " + val1)
+
+    if (this.$store.state.currentList.list !== "Rewards") {
       var taskSelect = document.getElementById("task-select");
       var taskDifficulty = document.getElementById("task-difficulty");
 
@@ -172,6 +186,26 @@ export default {
           var task = this.getDate(data.dailytasks);
 
           this.$store.commit('addDailyTask', task);
+        }
+      } else {
+        var data = {
+          "rewards": {"name":`${this.fields.textBoxValue}`,"cost":`${this.fields.textBoxValueCost}`}
+        }
+          fetch(`${window.config.apiBase}rewards/`, {
+            method: 'POST',
+            body: JSON.stringify(data), // data can be `string` or {object}!
+            headers:{
+              'Content-Type': 'application/json'
+            }
+          }).then(res => res.json())
+          .then(response => console.log('Success:', JSON.stringify(response)))
+          .catch(error => console.error('Error:', error));
+
+          var reward = data
+
+          this.$store.commit('addRewardTask', reward);
+
+
       }
       this.fields.textBoxValue = "";
     }

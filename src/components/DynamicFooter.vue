@@ -26,7 +26,7 @@
                 </router-link>
             </li>
             <li>
-                <router-link to="/NOMANDSLAND">
+                <router-link to="/Rewards">
                     <div>
                         <i class="material-icons">???</i>
                     </div>
