@@ -28,15 +28,6 @@
           <input v-model="fields.textBoxValue" id="email_inline" type="text" placeholder="e.g. Water the gnomes">
         </div>
 
-        <label for="task-select">Choose a Task Type:</label>
-
-        <select id="task-select">
-            <option value="">--Please choose an option--</option>
-            <option value="Todo">To-Do</option>
-            <option value="Daily">Daily</option>
-            <option value="Habit">Habit</option>
-        </select>
-
         <label for="task-difficulty">Choose a Difficulty:</label>
 
         <select id="task-difficulty">
@@ -125,9 +116,9 @@ export default {
       var taskSelect = document.getElementById("task-select");
       var taskDifficulty = document.getElementById("task-difficulty");
 
-      if(taskSelect.value === "" || taskDifficulty.value === "" || this.fields.textBoxValue === "") {
+      if(taskDifficulty.value === "" || this.fields.textBoxValue === "") {
         alert("Please select a valid option!");
-      } else if(taskSelect.value === "Habit") {
+      } else if(this.$store.state.currentList.list === "Habit") {
         var data = {
           "habittasks": {"task":`${this.fields.textBoxValue}`,"difficulty":`${taskDifficulty.value}`,"completed":false}
         }
@@ -146,7 +137,7 @@ export default {
           this.$store.commit('addHabitTask', task);
 
 
-      } else if(taskSelect.value === "Todo") {
+      } else if(this.$store.state.currentList.list === "Todo") {
         var data = {
           "todotasks": {"task":`${this.fields.textBoxValue}`,"difficulty":`${taskDifficulty.value}`,"completed":false}
         }
@@ -164,7 +155,7 @@ export default {
 
           this.$store.commit('addTodoTask', task);
 
-      } else if(taskSelect.value === "Daily") {
+      } else if(this.$store.state.currentList.list === "Daily") {
         var data = {
           "dailytasks": {"task":`${this.fields.textBoxValue}`,"difficulty":`${taskDifficulty.value}`,"completed":false}
         }

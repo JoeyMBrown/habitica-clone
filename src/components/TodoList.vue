@@ -45,7 +45,10 @@ export default {
     }
   },
   created: function(){
-    this.getTasks(`${window.config.apiBase}todos/`)
+    this.getTasks(`${window.config.apiBase}todos/`);
+    this.$store.dispatch('updateCurrentList', {
+      list: "Todo"
+    });
   },
   methods: {
     getTasks(url) {

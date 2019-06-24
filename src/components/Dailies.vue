@@ -40,7 +40,10 @@ export default {
     }
   },
   created: function(){
-    this.getTasks(`${window.config.apiBase}dailies/`)
+    this.getTasks(`${window.config.apiBase}dailies/`);
+    this.$store.dispatch('updateCurrentList', {
+      list: "Daily"
+    });
   },
   computed: {
     dailies() {

@@ -32,6 +32,9 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
+    currentList: {
+      list: "Todo"
+    },
     player: {
         name: '',
         hp: 25,
@@ -58,6 +61,9 @@ const store = new Vuex.Store({
     notifications: []
   },
   actions: {
+    updateCurrentList({commit}, currentList) {
+      commit('updateCurrentList', currentList.list);
+    },
     addNotification({commit}, notification) {
       commit('addNotification', notification);
       setTimeout(() => commit('removeNotification'), 3000);
@@ -108,6 +114,9 @@ const store = new Vuex.Store({
       //
       //
       //
+      updateCurrentList (state, currentList) {
+        state.currentList.list = currentList;
+      },
       updatePlayerArr (state, player0) {
         state.tasks.playerArr[0] = player0;
       },

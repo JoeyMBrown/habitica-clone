@@ -46,7 +46,10 @@ export default {
     }
   },
   created: function(){
-    this.getTasks(`${window.config.apiBase}habits/`)
+    this.getTasks(`${window.config.apiBase}habits/`);
+    this.$store.dispatch('updateCurrentList', {
+      list: "Habit"
+    });
   },
   methods: {
       getTasks(url) {
