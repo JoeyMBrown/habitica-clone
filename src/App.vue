@@ -28,7 +28,7 @@
           <input v-model="fields.textBoxValue" id="email_inline" type="text" placeholder="e.g. Water the gnomes">
         </div>
 
-        <label for="la">Choose a Cost:</label>
+        <label for="la" v-if="this.$store.state.currentList.list === 'Rewards'">Choose a Cost:</label>
 
         <div class="input-field inline">
           <input v-if="this.$store.state.currentList.list === 'Rewards'" v-model="fields.textBoxValueCost" id="la" type="text" placeholder="100">
