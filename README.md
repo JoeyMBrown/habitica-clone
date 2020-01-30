@@ -26,6 +26,13 @@ In four short months I managed to learn Vue.js, Elixir, and phoenix to deploy th
 - Inventory to view items
 - Much much more
 
+### Cool Features
+
+- Modal popups
+- Toasts
+- All data is displayed after being fetched from API (Tasks and player stats).
+- "Stats" amongst other measurable values are updated (and saved) upon action.
+
 ### Links
 
 What my app is based off: https://habitica.com/
